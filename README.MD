@@ -22,5 +22,4 @@ mysql -u root -p --port 3307 --host 127.0.0.1
 ```shell
 npm start
 ```
-then you can use chrome to connect with below address
-`[address]:3000`
+then you can connect with chrome, which address is `[address]:3000`

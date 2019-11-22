@@ -26,6 +26,32 @@ select host, user, password from user;
 ```
 Check your new user added, and press `Ctrl+D` to go back to shell.
 
+#### test DB
+To test if DB is work well,
+try below code.
+```sql
+CREATE DATABASE testDB default CHARACTER SET UTF8;
+GRANT ALL PRIVILEGES ON testDB.* TO 'se2019_1'@'%';
+
+CREATE TABLE team_member(
+_id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(32) NOT NULL,
+belong VARCHAR(100) DEFAULT 'CNU'
+) ENGINE=INNODB;
+DESC team_member;
+
+INSERT INTO team_member
+(name, belong)
+VALUES('전지원','충남대학교');
+INSERT INTO team_member
+(name, belong)
+VALUES('정준희','충남대학교');
+INSERT INTO team_member
+(name, belong)
+VALUES('정진욱','충남대학교');
+```
+
+
 ### Connect to DB
 ```shell
 mysql -u se2019_1 -p --port 3307 --host 127.0.0.1

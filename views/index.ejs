@@ -7,5 +7,18 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <p>Our team is
+    <table><tr><% for(var key in member[0]){ %>
+    <th><%= key %></th>
+    <% } %>
+    </tr><% for(var idx in member){ %>
+    <tr>
+      <% for(var key in member[0]){ %>
+        <td><%= member[idx][key] %></td>
+      <% } %>
+    </tr>
+    <% } %>
+    </table>
+    </p>
   </body>
 </html>

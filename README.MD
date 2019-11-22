@@ -62,3 +62,6 @@ mysql -u se2019_1 -p --port 3307 --host 127.0.0.1
 npm start
 ```
 then you can connect with chrome, which address is `[address]:3000`
+
+## How To see DB Example
+Go to branch : [Example_DB](https://github.com/orehonyah/se2019_1/tree/Examplecode_DB)

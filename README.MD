@@ -3,9 +3,6 @@
 ## Introduction
 This project is made for Software Engineering Term Project.  
 We using Expressjs and EJS.  
-```shell
-express -e se2019_1
-```
 
 ## Initialize
 ```shell

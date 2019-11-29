@@ -6,6 +6,8 @@ We using Expressjs and EJS.
 
 ## Initialize
 ```shell
+git clone https://github.com/orehonyah/se2019_1.git
+cd se2019_1
 npm install
 docker run --name mysql-se2019_1 -e MYSQL_ROOT_PASSWORD=orehonyah -p 3307:3306 -d mysql:5.6 
 ```

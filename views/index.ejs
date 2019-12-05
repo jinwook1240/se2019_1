@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" dir="ltr">
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="utf-8">
+    <title>firstUI</title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p>Our team is
-    <table><tr><% for(var key in member[0]){ %>
-    <th><%= key %></th>
-    <% } %>
-    </tr><% for(var idx in member){ %>
-    <tr>
-      <% for(var key in member[0]){ %>
-        <td><%= member[idx][key] %></td>
-      <% } %>
-    </tr>
-    <% } %>
-    </table>
-    </p>
+    <header>
+      <<h1>6조 좌석 예매 프로그램</h1>
+    </header><br>
+    <label for="date">날짜 : </label>
+    <input type="text" value=""><br>
+    <label for="departure">출발지 : </label>
+    <input type="text" value=""><br>
+    <label for="arrival">도착지 : </label>
+    <input type="text" value=""><br>
+    <br>
+    <input type="button" value="조회">
+    <input type="button" value="취소">
+    <br><br>
+    <input type="button" value="로그인">
   </body>
 </html>

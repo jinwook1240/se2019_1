@@ -5,19 +5,20 @@ class MemberDAO {
 
     }
 
-    searchMember(names) {
+    static searchMember(id, pw) {
 
+        return null;
     }
 
-    checkMember() {
-
-    }
+    static checkMember(id) {
+        return true;
+    };
 
     insertMember() {
-
+        return true;
     }
 
     updateCoin() {
-
+        return true;
     }
 }

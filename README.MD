@@ -64,3 +64,11 @@ then you can connect with chrome, which address is `[address]:3000`
 
 ## How To see DB Example
 Go to branch : [Example_DB](https://github.com/orehonyah/se2019_1/tree/Examplecode_DB)
+
+### Make DB Query
+```mysql
+transaction;
+db query query query...;
+db query query query...;
+commit;
+```

@@ -7,8 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var init = require('./routes/init');
-var fs = require('fs'); 
-var port = 3000;
 
 var Bus = require('./routes/Bus');
 var BusList = require('./routes/BusList');

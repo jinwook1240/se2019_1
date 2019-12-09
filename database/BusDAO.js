@@ -37,9 +37,8 @@ module.exports.createBus= (propDict, callback)=>{//GET PROPERTY WITH DICTIONARY
     connection.query(query1, (query_err, query_res, query_fields)=>{
         if(query_err){
             console.log(query_err);
-            return;
         }
-        callback(query_res, query_fields);
+        callback(query_err, query_res, query_fields);
     })
 };
 

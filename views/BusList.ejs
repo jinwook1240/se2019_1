@@ -1,0 +1,12 @@
+<table id="busList">
+    <% for(var key in buslist[0]){ %>
+        <th><%= key %></th>
+    <% } %>
+    </tr><% for(var idx in buslist){ %>
+        <tr>
+            <% for(var key in buslist[0]){ %>
+                <td><%= buslist[idx][key] %></td>
+            <% } %>
+        </tr>
+    <% } %>
+</table>

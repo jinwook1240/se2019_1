@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="ko" dir="ltr">
-<head>
-    <%- include("forms/head") -%>
-</head>
-<body>
-<header>
-    <h1>6조 좌석 예매 프로그램</h1>
-</header><br>
-<label for="date">날짜 : </label>
-<input type="text" value=""><br>
-<label for="departure">출발지 : </label>
-<input type="text" value=""><br>
-<label for="arrival">도착지 : </label>
-<input type="text" value=""><br>
-<br>
-<input type="button" value="조회">
-<input type="button" value="취소">
-<br><br>
-<input type="button" value="로그인">
-</body>
-</html>
+<table id="busList">
+    <% for(var key in buslist[0]){ %>
+        <th><%= key %></th>
+    <% } %>
+    </tr><% for(var idx in buslist){ %>
+        <tr>
+            <% for(var key in buslist[0]){ %>
+                <td><%= buslist[idx][key] %></td>
+            <% } %>
+        </tr>
+    <% } %>
+</table>

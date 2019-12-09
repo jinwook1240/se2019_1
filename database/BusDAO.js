@@ -6,7 +6,7 @@ if(module.exports.connection === undefined){
 }
 let connection = module.exports.connection;
 module.exports.getBusList= (callback)=>{
-    connection.query('SELECT * FROM Bus', function(query_err, query_res, query_fields){
+    connection.query('SELECT * FROM bus', (query_err, query_res, query_fields)=>{
         if(query_err){
             console.log(query_err);
             return;
@@ -15,13 +15,13 @@ module.exports.getBusList= (callback)=>{
     })
 };
 module.exports.searchBus= (condition, callback)=>{
-    connection.query('SELECT * FROM Bus WHERE '+condition, function(query_err, query_res, query_fields){
+    connection.query('SELECT * FROM Bus WHERE '+condition, (query_err, query_res, query_fields)=>{
         if(query_err){
             console.log(query_err);
             return;
         }
         callback(query_res, query_fields);
-    })
+    });
 };
 module.exports.createBus= (propDict, callback)=>{//GET PROPERTY WITH DICTIONARY
     let query1 = 'transaction;' +
@@ -34,7 +34,7 @@ module.exports.createBus= (propDict, callback)=>{//GET PROPERTY WITH DICTIONARY
         query2+=propDict[key];
     }
     query1 = query1+query2+query3;
-    connection.query(query1, function(query_err, query_res, query_fields){
+    connection.query(query1, (query_err, query_res, query_fields)=>{
         if(query_err){
             console.log(query_err);
             return;

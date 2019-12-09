@@ -25,11 +25,15 @@ class Member {
         });
     }
 
-    signUp(id, pw, name, phone, email) {
+    static signUp(id, pw, name, phone, email) {
         MemberDAO.insertMember(id, pw, function(res) {
             if (res) alert("Sign Up is completed");
             else alert('Error');
         });
+    }
+
+    static signOut() {
+        
     }
 }
 

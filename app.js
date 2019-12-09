@@ -6,11 +6,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var init = require('./routes/init');
+
 var Bus = require('./routes/Bus');
 var BusList = require('./routes/BusList');
 
 var Member = require('./routes/Member');
 var MemberList = require('./routes/MemberList');
+
 
 var app = express();
 
@@ -25,6 +28,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/init', init);
 app.use('/bus', Bus);
 app.use('/buslist', BusList);
 app.use('/member', Member);
@@ -42,7 +46,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -53,7 +57,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -61,5 +65,6 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var initRouter = require('./routes/init');
 
 module.exports = app;

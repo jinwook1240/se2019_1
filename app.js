@@ -7,8 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var init = require('./routes/init');
-var fs = require('fs'); 
-var port = 3000;
+var login = require('./routes/login');
 
 var Bus = require('./routes/Bus');
 var BusList = require('./routes/BusList');
@@ -30,7 +29,8 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/init', init);
+app.use('/', init);
+app.use('/login', login);
 app.use('/bus', Bus);
 app.use('/buslist', BusList);
 app.use('/member', Member);
@@ -67,6 +67,5 @@ app.use(function(err, req, res) {
     });
 });
 
-var initRouter = require('./routes/init');
 
 module.exports = app;

@@ -3,11 +3,10 @@
 if(module.exports.connection !== undefined) {
     return;
 }
-console.log("asdf");
-const TAG = "database/BusDAO";
+const TAG = "BusDAO";
 module.exports.connection = require('../database/mysql.js');
 
-let connection = module.exports.connection;
+const connection = module.exports.connection;
 
 module.exports.getBusList = (callback) => {
     connection.query('SELECT * FROM bus', (query_err, query_res, query_fields) => {
@@ -19,7 +18,8 @@ module.exports.getBusList = (callback) => {
     })
 };
 module.exports.searchBus = (condition, callback) => {
-    connection.query('SELECT * FROM Bus WHERE ' + condition, (query_err, query_res, query_fields) => {
+    console.log(TAG+".searchBus Query : "+'SELECT * FROM bus WHERE ' + condition);
+    connection.query('SELECT * FROM bus WHERE ' + condition, (query_err, query_res, query_fields) => {
         if (query_err) {
             console.log(query_err);
             return;

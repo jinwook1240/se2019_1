@@ -22,7 +22,7 @@ router.post('/', (req, res)=> {
 });
 
 router.get('/busDetail', (req, res)=> {
-    SeatRsrvDAO.searchBus(req.query['date'], req.query.dptLoc, 
+    SeatRsrvDAO.searchSeats(req.query['date'], req.query.dptLoc, 
         req.query.dptTime, req.query.arvTime, (dao_res) => {
             if (!dao_res) alert('SeatReservationDAO.searchSeats Query Error');
             let seats = new Array();

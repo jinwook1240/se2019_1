@@ -1,12 +1,24 @@
-<table id="busList">
-    <% for(var key in buslist[0]){ %>
-        <th><%= key %></th>
-    <% } %>
-    </tr><% for(var idx in buslist){ %>
-        <tr>
-            <% for(var key in buslist[0]){ %>
-                <td><%= buslist[idx][key] %></td>
+
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+    <body>
+        <table id="busList">
+            <tr>
+            <% for (var key in buslist[0]) { %>
+                <% if (key === 'bus_code') continue; %>
+                <th><%= key %></th>
             <% } %>
-        </tr>
-    <% } %>
-</table>
+            </tr>
+            <% for (var idx in buslist) { %>
+            <tr><% for (var key in buslist[0])  { %>
+                <% if (key === 'bus_code') continue; %>
+                <td><%= buslist[idx][key] %></td>
+                <% } %>
+            </tr>
+            <% } %>
+        </table>
+    </body>
+</html>

@@ -9,7 +9,7 @@ module.exports.connection = require('../database/mysql.js');
 const connection = module.exports.connection;
 
 module.exports.getBusList = (callback) => {
-    connection.query('SELECT * FROM bus', (query_err, query_res, query_fields) => {
+    connection.query('SELECT * FROM jjj.bus', (query_err, query_res, query_fields) => {
         if (query_err) {
             console.log(query_err);
             return;
@@ -18,13 +18,13 @@ module.exports.getBusList = (callback) => {
     })
 };
 module.exports.searchBus = (condition, callback) => {
-    console.log(TAG+".searchBus Query : "+'SELECT * FROM bus WHERE ' + condition);
-    connection.query('SELECT * FROM bus WHERE ' + condition, (query_err, query_res, query_fields) => {
+    console.log(TAG+".searchBus Query : "+'SELECT * FROM jjj.bus WHERE ' + condition);
+    connection.query('SELECT * FROM jjj.bus WHERE ' + condition, (query_err, query_res, query_fields) => {
         if (query_err) {
             console.log(query_err);
             return;
         }
-        callback(query_res, query_fields);
+        callback(query_res);
     });
 };
 module.exports.createBus = (propDict, callback) => {//GET PROPERTY WITH DICTIONARY

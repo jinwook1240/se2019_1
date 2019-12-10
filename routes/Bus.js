@@ -11,7 +11,7 @@ router.get('/', (req, res)=> {
 });
 
 router.post('/', (req, res)=> {
-    BusDAO.createBus(res.query.props, (err, queryres, fields)=>{
+    BusDAO.createBus(req.query.props, (err, queryres, fields)=>{
         if(err){
             res.render('error',{'message':"차량 추가에 실패하였습니다.", 'error':err});
             return;

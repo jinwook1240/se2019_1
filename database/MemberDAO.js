@@ -1,9 +1,6 @@
 'use strict';
 
-if (module.exports.connection == undefined) {
-    module.exports.connection = require('../database/mysql.js');
-    module.exports.connection.connect();
-}
+module.exports.connection = require('../database/mysql.js');
 
 class MemberDAO {
     static searchMember(id, pw, callback) {

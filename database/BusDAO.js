@@ -1,9 +1,8 @@
 'use strict';
 const TAG = "database/BusDAO";
-if(module.exports.connection === undefined){
-    module.exports.connection = require('../database/mysql.js');
-    module.exports.connection.connect();
-}
+module.exports.connection = require('../database/mysql.js');
+
+
 let connection = module.exports.connection;
 module.exports.getBusList= (callback)=>{
     connection.query('SELECT * FROM bus', (query_err, query_res, query_fields)=>{

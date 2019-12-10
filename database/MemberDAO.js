@@ -1,5 +1,6 @@
 'use strict';
 
+<<<<<<< HEAD
 if (module.exports.connection !== undefined) return;
 
 module.exports.connection = require('../database/mysql.js');
@@ -8,6 +9,9 @@ const conn = module.exports.connection;
 module.exports.searchMember = MemberDAO.searchMember;
 module.exports.insertMember = MemberDAO.insertMember;
 module.exports.updateCoin = MemberDAO.updateCoin;
+=======
+module.exports.connection = require('../database/mysql.js');
+>>>>>>> 6f1f18a00e3e8b44f2ffab8fdf0f82aa46fc463b
 
 class MemberDAO {
     static searchMember(id, pw, callback) {

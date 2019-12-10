@@ -1,9 +1,11 @@
-'use strict'
+'use strict';
 
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function(req, res){
+router.get('/signIn', function(req, res){
+});
+router.get('/signUp', function(req, res){
     res.cookie('login', 'username', {
         maxAge: 30000   // 30000밀리초 → 30초
     });

@@ -5,9 +5,6 @@ if (module.exports.connection !== undefined) return;
 module.exports.connection = require('../database/mysql.js');
 const conn = module.exports.connection;
 
-module.exports.searchMember = MemberDAO.searchMember;
-module.exports.insertMember = MemberDAO.insertMember;
-module.exports.updateCoin = MemberDAO.updateCoin;
 
 class MemberDAO {
     static searchMember(id, pw, callback) {
@@ -27,7 +24,7 @@ class MemberDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
-            else ret = true
+            else ret = true;
             callback(ret);
         });
     }
@@ -37,8 +34,11 @@ class MemberDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
-            else ret = true
+            else ret = true;
             callback(ret);
         });
     }
 }
+module.exports.searchMember = MemberDAO.searchMember;
+module.exports.insertMember = MemberDAO.insertMember;
+module.exports.updateCoin = MemberDAO.updateCoin;

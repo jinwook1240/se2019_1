@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
-        <meta charset="utf-8">
-        <title>signUp</title> 
+        <%- include('forms/head'); -%>
     </head>
     <body>
         <header>
-            <h3>회원 가입</h3>
+            <%- include('forms/head'); -%>
         </header>
+        <h3>회원 가입</h3>
         <label for="">ID : </label>
         <input type="text"><br>
         <label for="">PW : </label>
@@ -22,5 +22,8 @@
         <input type="text"><br><br>
         <input type="button" value="회원 가입">
         <input type="button" value="취소">
+        <footer>
+            <%- include('forms/footer'); -%>
+        </footer>
     </body>
 </html>

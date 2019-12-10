@@ -3,9 +3,11 @@
 const express = require('express');
 const router = express.Router();
 const MemberDAO = require("../database/MemberDAO");
+const sessionDict = {};
 
 router.get('/signIn', (req, res) => { // log in
-    Member.signIn(req.query.id, req.query.pw, res);
+    console.log("test : "+router.session);
+    Member.signIn(req.query.id, req.query.pw, req, res);
 });
 
 router.get('/signUp', (req, res) => { // sign up
@@ -31,8 +33,7 @@ class Member {
         this.email = email;
         this.coin = coin;
     }
-
-    static signIn(id, pw, res) {
+    static signIn(id, pw, req, res) {
         if(id===undefined && pw === undefined){
             res.render('SignIn', {'loginMessage':undefined});
         }
@@ -51,6 +52,11 @@ class Member {
                 } else if (dao_res === 2) {
                     res.render('SignIn', {'loginMessage':"Input password is wrong!!"});
                 } else {
+                    if(!req.session.logined){
+                        res.redirect('/');
+                    }
+                    req.session.logined = true;
+                    req.session.user_id=id;
                     res.redirect('/');
                 }
             });
@@ -59,8 +65,8 @@ class Member {
 
     static signUp(id, pw, name, phone, email, res) {
         MemberDAO.insertMember(id, pw, name, phone, email, (dao_res) => {
-            if (dao_res) alert("Sign Up is completed");
-            else alert('Error');
+            if (dao_res) res.redirect('/');
+            else res.render('SignUp', {'signupMessage':""});
         });
     }
 
@@ -80,3 +86,4 @@ class Member {
 }
 
 module.exports = router;
+module.exports.sessions = sessionDict;

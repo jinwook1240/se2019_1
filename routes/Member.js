@@ -5,12 +5,12 @@ const router = express.Router();
 const MemberDAO = require("../database/MemberDAO");
 
 router.get('/signIn', (req, res) => { // log in
-    Member.signIn(req.param('id'), req.param('pw'), res);
+    Member.signIn(req.query.id, req.query.pw, res);
 });
 
 router.get('/signUp', (req, res) => { // sign up
-    Member.signUp(req.param('id'), req.param('pw'), 
-        req.param('name'), req.param('phone'), req.param('email'), res);
+    Member.signUp(req.query.id, req.query.pw, 
+        req.query['name'], req.query.phone, req.query.email, res);
 });
 
 router.get('/signOut', (req, res) => { // log out
@@ -18,7 +18,7 @@ router.get('/signOut', (req, res) => { // log out
 });
 
 router.get('/updateCoin', (req, res) => { // updateCoin
-    Member.updateCoin(req.param('id'), req.param('coin'), res);
+    Member.updateCoin(req.query.id, req.query.coin, res);
 });
 
 

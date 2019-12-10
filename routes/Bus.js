@@ -34,7 +34,7 @@ router.get('/busDetail', (req, res)=> {
                 if (seats[i] !== undefined) continue;
                 seats[i] = new Seat(i, false);
             }
-            res.render('', {'' :Seat.make_seats_display(seats)});
+            res.render('', {'' :Seat.make_seats_display(seats)}); // 채워야 함
         });
 });
 

@@ -23,7 +23,7 @@ class MemberDAO {
     }
 
     static insertMember(id, pw, name, phone, email, callback) {
-        const sql = 'INSERT INTO member VALUES('+id+','+pw+','+name+','+phone+','+email+')';
+        const sql = 'INSERT INTO jjj.member VALUES("'+id+'","'+pw+'","'+name+'","'+phone+'","'+email+'")';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
@@ -33,7 +33,7 @@ class MemberDAO {
     }
 
     static updateCoin(id, coin) {
-        const sql = 'UPDATE member SET coin = '+coin+' where id = '+id;
+        const sql = 'UPDATE jjj.member SET coin = "'+coin+'" where id = "'+id+'"';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error

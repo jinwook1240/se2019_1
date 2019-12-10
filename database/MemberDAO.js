@@ -24,7 +24,7 @@ class MemberDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
-            else ret = true
+            else ret = true;
             callback(ret);
         });
     }
@@ -34,7 +34,7 @@ class MemberDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
-            else ret = true
+            else ret = true;
             callback(ret);
         });
     }

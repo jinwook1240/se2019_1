@@ -1,11 +1,22 @@
 'use strict';
 
+<<<<<<< HEAD
+if (module.exports.connection !== undefined) return;
+
 module.exports.connection = require('../database/mysql.js');
+const conn = module.exports.connection;
+
+module.exports.searchMember = MemberDAO.searchMember;
+module.exports.insertMember = MemberDAO.insertMember;
+module.exports.updateCoin = MemberDAO.updateCoin;
+=======
+module.exports.connection = require('../database/mysql.js');
+>>>>>>> 6f1f18a00e3e8b44f2ffab8fdf0f82aa46fc463b
 
 class MemberDAO {
     static searchMember(id, pw, callback) {
         const sql = 'SELECT * FROM member where id = ' + id;
-        module.exports.connection.query(sql, function(query_err, query_res, query_fields){
+        conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  0; // error
             else if (query_res.length == 0) ret = 1; // id doesn't exist
@@ -16,8 +27,8 @@ class MemberDAO {
     }
 
     static insertMember(id, pw, name, phone, email, callback) {
-        const sql = 'INSERT INTO MEMBER VALUES('+id+','+pw+','+name+','+phone+','+email+')'
-        module.exports.connection.query(sql, function(query_err, query_res, query_fields){
+        const sql = 'INSERT INTO member VALUES('+id+','+pw+','+name+','+phone+','+email+')';
+        conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  false; // error
             else ret = true
@@ -26,6 +37,12 @@ class MemberDAO {
     }
 
     static updateCoin(id, coin) {
-        return true;
+        const sql = 'UPDATE member SET coin = '+coin+' where id = '+id;
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            let ret;
+            if (query_err) ret =  false; // error
+            else ret = true
+            callback(ret);
+        });
     }
 }

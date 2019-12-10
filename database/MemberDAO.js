@@ -5,9 +5,6 @@ if (module.exports.connection !== undefined) return;
 module.exports.connection = require('../database/mysql.js');
 const conn = module.exports.connection;
 
-module.exports.searchMember = MemberDAO.searchMember;
-module.exports.insertMember = MemberDAO.insertMember;
-module.exports.updateCoin = MemberDAO.updateCoin;
 
 class MemberDAO {
     static searchMember(id, pw, callback) {
@@ -42,3 +39,6 @@ class MemberDAO {
         });
     }
 }
+module.exports.searchMember = MemberDAO.searchMember;
+module.exports.insertMember = MemberDAO.insertMember;
+module.exports.updateCoin = MemberDAO.updateCoin;

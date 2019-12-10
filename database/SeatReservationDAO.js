@@ -5,7 +5,6 @@ if (module.exports.connection !== undefined) return;
 module.exports.connection = require('../database/mysql.js');
 const conn = module.exports.connection;
 
-module.exports.searchSeats = SeatReservationDAO.searchSeats;
 
 class SeatReservationDAO {
     static searchSeats(date, dptLoc, arvLoc, dptTime, arvTime, callback) {
@@ -20,3 +19,4 @@ class SeatReservationDAO {
         });
     }
 }
+module.exports.searchSeats = SeatReservationDAO.searchSeats;

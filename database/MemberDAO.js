@@ -8,10 +8,13 @@ const conn = module.exports.connection;
 
 class MemberDAO {
     static searchMember(id, pw, callback) {
-        const sql = 'SELECT * FROM member where id = ' + id;
+        const sql = 'SELECT * FROM jjj.member WHERE member_id="' + id + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
-            if (query_err) ret =  0; // error
+            if (query_err){
+                ret =  0; // error
+                console.log(query_err);
+            }
             else if (query_res.length == 0) ret = 1; // id doesn't exist
             else if (query_res[0]['passwd'] != pw) ret = 2; // password is wrong
             else ret = query_res[0];

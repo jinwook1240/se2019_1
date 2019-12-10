@@ -11,7 +11,7 @@ router.get('/', (req, res)=> {
     });
 });
 router.get('/search', (req, res)=> {//?condition= 쿼리 조건문
-    BusDAO.searchBus(res.query.condition, (queryres)=>{
+    BusDAO.searchBus(req.query.condition, (queryres)=>{
         res.render('BusList', {'buslist':queryres});
     });
 });

@@ -33,17 +33,28 @@ class Member {
     }
 
     static signIn(id, pw, res) {
-        MemberDAO.searchMember(id, pw, (dao_res) => {
-            if (dao_res == 0) {
-                alert('Error');
-            } else if (dao_res == 1) {
-                alert("Input ID doesn't exist");
-            } else if (dao_res == 2) {
-                alert("Input password is wrong")
-            } else {
-                res.render('SignIn', {'member':dao_res});
-            }
-        });
+        if(id===undefined && pw === undefined){
+            res.render('SignIn', {'loginMessage':undefined});
+        }
+        else if(id===undefined){
+            res.render('SignIn', {'loginMessage':"please type id"});
+        }
+        else if(pw===undefined){
+            res.render('SignIn', {'loginMessage':"please type pw"});
+        }
+        else{
+            MemberDAO.searchMember(id, pw, (dao_res) => {
+                if (dao_res === 0) {
+                    res.render('SignIn', {'loginMessage':"Something went wrong!!"});
+                } else if (dao_res === 1) {
+                    res.render('SignIn', {'loginMessage':"Input ID doesn't exist!!"});
+                } else if (dao_res === 2) {
+                    res.render('SignIn', {'loginMessage':"Input password is wrong!!"});
+                } else {
+                    res.redirect('/');
+                }
+            });
+        }
     }
 
     static signUp(id, pw, name, phone, email, res) {

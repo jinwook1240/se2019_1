@@ -15,24 +15,11 @@
     <label for="arvloc">도착지 : </label>
     <input type="text" id="arvloc" name="arvloc" value=""><br>
     <br>
-    <!-- <input type="button" id="searchBusList" value="조회" onclick="searchBusList"> -->
     <input type="button" id="searchButton" value="조회">
     <input type="button" value="취소">
     <br><br>
     <input type="button" value="로그인">
     <input type="button" value="회원가입">
   </body>
-  <script>
-    const button = document.getElementById("searchButton");
-    button.onclick = function() {
-        const date = document.getElementById("date").value;
-        const dptloc = document.getElementById("dptloc").value;
-        const arvloc = document.getElementById("arvloc").value;
-        const query = "?date="+date + "&dptloc="+dptloc + "&arvloc="+arvloc;
-        location.href = location+"busList"+query;
-    }
-  </script>
-  <!-- <script type="text/javascript" src="/scripts/busList.js">
-    searchBusList()
-  </script> -->
+  <script type="text/javascript" src="/scripts/busList.js"></script>
 </html>

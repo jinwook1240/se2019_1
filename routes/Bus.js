@@ -52,7 +52,7 @@ router.get('/busdetail', (req, res)=> {
             for (let i = 1; i <= 28; i++) {
                 if (seats[i] === undefined) seats[i] = new Seat(i, false);
             }
-            res.render('', {'' :Seat.make_seats_display(seats)}); // 채워야 함
+            res.render('reservation', {'' :}); // 채워야 함
         });
 });
 

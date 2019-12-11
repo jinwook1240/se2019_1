@@ -6,8 +6,10 @@ const BusDAO = require("../database/BusDAO");
 const SeatRsrvDAO = require("../database/SeatReservationDAO");
 
 router.get('/', (req, res)=> {
-    BusDAO.searchBus(res.query.busId, (queryres)=>{
-        res.render('Bus', {'buslist':queryres});
+    const condition = 'bus_code="'+req.query.date+req.query.dptloc+req.query.arvloc+'"';
+    console.log(condition);
+    BusDAO.searchBus(condition, (dao_res)=>{
+        res.render('Bus', {'buslist':dao_res});
     });
 });
 

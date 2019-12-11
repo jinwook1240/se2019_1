@@ -33,7 +33,7 @@
         for (let i = 0; i < len; i++) {
             buttons[i].onclick = () => {
                 const query = "?bus_code="+ <%- JSON.stringify(bus_codes) %>[i];
-                location.href = location+"reservation"+query;
+                location.href = location.origin+"/reservation"+query;
             }
         }
     </script>

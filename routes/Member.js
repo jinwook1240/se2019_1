@@ -97,11 +97,11 @@ class Member {
     }
 
     static updateCoin(id, coin, res) {
-        if (coin < 0) alert('Error');
+        if (coin < 0) res.render('error',{'message':"Cannot input coin smaller then 0", "error":{}});
         else {
             MemberDAO.updateCoin(id, coin, (dao_res) => {
-                if (dao_res) res.render('UpdateCoin', {'id' : id, 'coin':coin});
-                else alert('Error');
+                if (dao_res) res.send('ok');
+                else res.render('error',{'message':"Query error", "error":{}});
             });
         }
     }

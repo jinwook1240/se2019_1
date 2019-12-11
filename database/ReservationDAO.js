@@ -33,12 +33,23 @@ class ReservationDAO {
                 callback(query_err, null, null);
                 return;
             }
-            const bus_code = query_res[0]['bus_code'];
-            let seat_nums = new Array();
-            for (let i in query_res) {
+            let bus_codes = [query_res[0]['bus_code']];
+            let seats = new Array();
+            let size = 1;
+            let seat_nums = [query_res[0]['seat_number']];
+            const len = query_res.length;
+            for (let i = 1; i < len; i++) {
+                const bus_code = query_res[i]['bus_code'];
+                if (bus_codes[size] != bus_code) {
+                    seats.push(seat_nums)
+                    seat_nums = new Array();
+                    bus_codes.push(bus_code);
+                    size++;
+                }
                 seat_nums.push(query_res[i]['seat_number']);
             }
-            callback(null, bus_code, seat_nums);
+            seats.push(seat_nums);
+            callback(null, bus_codes, seats);
         });
     }
 

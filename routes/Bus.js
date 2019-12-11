@@ -22,6 +22,9 @@ router.post('/', (req, res)=> {
         res.render('Bus', {'buslist':queryres});
     });
 });
+router.get('/busAdd', (req, res)=>{
+    res.render('busAdd',{});
+});
 
 router.get('/busDetail', (req, res)=> {
     SeatRsrvDAO.searchSeats(req.query['date'], req.query.dptLoc, 

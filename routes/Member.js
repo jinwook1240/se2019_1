@@ -4,9 +4,9 @@ const express = require('express');
 const router = express.Router();
 const MemberDAO = require("../database/MemberDAO");
 const sessionDict = {};
-
+const CLASSTAG = "Member";
 router.get('/signIn', (req, res) => { // log in
-    console.log("test : "+router.session);
+    console.log()
     Member.signIn(req.query.id, req.query.pw, req, res);
 });
 
@@ -16,13 +16,12 @@ router.get('/signUp', (req, res) => { // sign up
 });
 
 router.get('/signOut', (req, res) => { // log out
-    Member.signOut(res);
+    Member.signOut(req, res);
 });
 
 router.get('/updateCoin', (req, res) => { // updateCoin
     Member.updateCoin(req.query.id, req.query.coin, res);
 });
-
 
 class Member {
     constructor(id, pw, name, phone, email, coin) {
@@ -34,30 +33,45 @@ class Member {
         this.coin = coin;
     }
     static signIn(id, pw, req, res) {
+        let message = {"user_id":req.session.user_id};
+        const FUNCTIONTAG = "signIn";
         if(id===undefined && pw === undefined){
-            res.render('signIn', {'loginMessage':undefined});
+            message['loginMessage'] = undefined;
+            res.render('signIn', message);
         }
-        else if(id===undefined){
-            res.render('signIn', {'loginMessage':"please type id"});
+        else if(id===""){
+            DEBUG_LOG(FUNCTIONTAG, "id undefined");
+            message['loginMessage'] = "please type id";
+            res.render('signIn', message);
         }
-        else if(pw===undefined){
-            res.render('signIn', {'loginMessage':"please type pw"});
+        else if(pw===""){
+            DEBUG_LOG(FUNCTIONTAG, "password undefined");
+            message['loginMessage'] = "please type pw";
+            res.render('signIn', message);
         }
         else{
             MemberDAO.searchMember(id, pw, (dao_res) => {
                 if (dao_res === 0) {
-                    res.render('signIn', {'loginMessage':"Something went wrong!!"});
+                  message['loginMessage'] = "Something went wrong!!";
+                    DEBUG_LOG(FUNCTIONTAG, "Something went wrong!!");
+                    res.render('signIn', message);
                 } else if (dao_res === 1) {
-                    res.render('signIn', {'loginMessage':"Input ID doesn't exist!!"});
+                  message['loginMessage'] = "Input ID doesn't exist!!";
+                    DEBUG_LOG(FUNCTIONTAG, "Input ID doesn't exist!!");
+                    res.render('signIn', message);
                 } else if (dao_res === 2) {
-                    res.render('signIn', {'loginMessage':"Input password is wrong!!"});
+                  message['loginMessage'] = "Input password is wrong!!";
+                    DEBUG_LOG(FUNCTIONTAG, "Input password is wrong!!");
+                    res.render('signIn', message);
                 } else {
-                    if(!req.session.logined){
+                    if(req.session.user_id){
+                        DEBUG_LOG(FUNCTIONTAG, "currently logined");
+                        res.redirect('/');
+                    }else{
+                        DEBUG_LOG(FUNCTIONTAG, "login success! : "+id);
+                        req.session.user_id=id;
                         res.redirect('/');
                     }
-                    req.session.logined = true;
-                    req.session.user_id=id;
-                    res.redirect('/');
                 }
             });
         }
@@ -70,7 +84,10 @@ class Member {
         });
     }
 
-    static signOut(res) {
+    static signOut(req, res) {
+        req.session.user_id=undefined;
+        req.session.destroy();
+        res.clearCookie('sid');
         res.render('signOut', {});
     }
 
@@ -87,3 +104,7 @@ class Member {
 
 module.exports = router;
 module.exports.sessions = sessionDict;
+
+function DEBUG_LOG(functionTag, str){
+    console.log(CLASSTAG+"."+functionTag+" : "+str);
+}

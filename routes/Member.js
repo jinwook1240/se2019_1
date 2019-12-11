@@ -78,9 +78,14 @@ class Member {
     }
 
     static signUp(id, pw, name, phone, email, res) {
+        if(!id || !pw || !name || !phone || !email){
+            res.render('signUp', {'signupMessage':"fill all blanks"});
+            return;
+        }
         MemberDAO.insertMember(id, pw, name, phone, email, (dao_res) => {
+            console.log(id, pw, name, phone, email);
             if (dao_res) res.redirect('/');
-            else res.render('signUp', {'signupMessage':""});
+            else res.redirect('/');
         });
     }
 

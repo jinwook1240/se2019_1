@@ -14,16 +14,16 @@ router.get('/', (req, res)=> {
 });
 
 router.get('/searchlist', (req, res)=> {
-    const member_id = req.query.member_id;
-    RsrvDAO.searchReservations(req.query.member_id, (err, bus_code, seat_nums)=> {
+    const member_id = req.session.used_id;
+    RsrvDAO.searchReservations(member_id, (err, bus_codes, seats)=> {
         if (err) {
             res.render('error',{'message':"예매내역 확인에 실패하였습니다.", 'error':err});
             return;
         }
         res.render('reservationList', {
             'member_id': member_id,
-            'bus_code': bus_code,
-            'seat_nums': seat_nums, // 예약된 좌석번호들 ex) [18, 19]
+            'bus_codes': bus_codes,
+            'seats': seats, // 예약된 좌석번호들 ex) [18, 19]
         });
     });
 });

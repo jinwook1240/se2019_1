@@ -7,21 +7,32 @@
     <header>
       <%- include('forms/header'); -%>
     </header><br>
-    <form id="busSearchForm">
+    <form action="./busAdd">
       <label for="date">날짜 : </label>
       <input type="text" id="date" name="date" value=""><br>
       <label for="dptloc">출발지 : </label>
-      <input type="text" id="dptloc" name="dptloc" value=""><br>
+      <input type="text" id="departure_location" name="departure_location" value=""><br>
       <label for="arvloc">도착지 : </label>
-      <input type="text" id="arvloc" name="arvloc" value=""><br>
+      <input type="text" id="arrival_location" name="arrival_location" value=""><br>
+      <label for="dptloc">출발시각 : </label>
+      <input type="text" id="departure_location" name="departure_time" value=""><br>
+      <label for="arvloc">도착시각 : </label>
+      <input type="text" id="arrival_location" name="arrival_time" value=""><br>
+      <label for="arvloc">요금 : </label>
+      <input type="number" id="arrival_location" name="rate" value=""><br>
       <br>
-      <input type="button" id="searchButton" value="조회" onclick="searchBus();">
-      <input type="button" value="취소">
+      <input type="submit" id="searchButton" value="확인" >
+      <input type="button" value="취소" onclick="window.location.href='/'">
       <br><br>
     </form>
-    <div id="busTable"></div>
     <footer>
       <%- include('forms/footer'); -%>
     </footer>
+  <script>
+    window.onload=()=>{
+      <% if(alertmessage){ %> alert(<%= alertmessage %>);<% } %>
+      <% if(script){ %> <%= script %> <% } %>
+    }
+  </script>
   </body>
 </html>

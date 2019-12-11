@@ -9,7 +9,7 @@ router.get('/', (req, res)=> {
     const condition = 'bus_code="'+req.query.bus_code+'"';
     console.log(condition);
     BusDAO.searchBus(condition, (buslist)=>{
-        res.render('Bus', {'buslist':buslist});
+        res.render('Bus', {'buslist':buslist, "user_id":req.session.user_id});
     });
 });
 

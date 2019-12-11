@@ -7,12 +7,11 @@ class Seat {
     static make_seats_display(seats) {
         var seatNum = 1;
         document.write("<table>")
-        for(var i = 1; i <= 9; i++){
-            document.write("<tr>");
-            for(var j = 1; j <= 4; j++){
-                if(i == 1 && j == 3)
+        for(var row = 1; row <= 9; row++){
+            for(var column = 1; column <= 4; column++){
+                if(row == 1 && column == 3)
                     document.write('<td rowspan="8">'+ seatNum + "</td>");
-                else if (i == 9 || j != 3)
+                else if (row == 9 || column != 3)
                     document.write("<td>"+ seatNum + "</td>");
                 else
                     continue;

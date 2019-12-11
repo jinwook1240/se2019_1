@@ -10,14 +10,14 @@ router.get('/', (req, res)=> {
     let beforecondition = false;
     console.log(req.body);
     if(req.query.date && req.query.date !== ""){
-        condition = 'date="'+req.query.date;
+        condition = 'date="'+req.query.date+'"';
         beforecondition = true;
     }
     if(req.query.dptloc && req.query.dptloc !== ""){
         if(beforecondition){
             condition+= " and"
         }
-        condition+=' departure_location="'+req.query.dptloc;
+        condition+=' departure_location="'+req.query.dptloc+'"';
         beforecondition = true;
     }
     if(req.query.arvloc && req.query.arvloc !== ""){

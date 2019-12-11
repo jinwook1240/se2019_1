@@ -27,11 +27,11 @@ router.get('/busAdd', (req, res)=>{
 });
 
 router.get('/busdetail', (req, res)=> {
-    RsrvDAO.searchSeats(req.query.bus_code, (dao_res) => {
-            if (!dao_res) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
+    RsrvDAO.searchSeats(req.query.bus_code, (reservedSeats) => {
+            if (!reservedSeats) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
             let seats = new Array();
-            for (let i in dao_res) {
-                const num = dao_res[i].seat_number
+            for (let i in reservedSeats) {
+                const num = reservedSeats[i]['seat_number']
                 seats[num] = new Seat(num, true);
             }
             for (let i = 1; i <= 28; i++) {

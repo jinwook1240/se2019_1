@@ -22,6 +22,9 @@ router.post('/', (req, res)=> {
         res.render('Bus', {'buslist':queryres});
     });
 });
+router.get('/busAdd', (req, res)=>{
+    res.render('busAdd',{});
+});
 
 router.get('/busDetail', (req, res)=> {
     RsrvDAO.searchSeats(req.query.bus_code, (dao_res) => {

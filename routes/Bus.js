@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const BusDAO = require("../database/BusDAO");
-const SeatRsrvDAO = require("../database/SeatReservationDAO");
+const RsrvDAO = require("../database/ReservationDAO");
 
 router.get('/', (req, res)=> {
     const condition = 'bus_code="'+req.query.date+req.query.dptloc+req.query.arvloc+'"';
@@ -24,17 +24,16 @@ router.post('/', (req, res)=> {
 });
 
 router.get('/busDetail', (req, res)=> {
-    SeatRsrvDAO.searchSeats(req.query['date'], req.query.dptLoc, 
-        req.query.dptTime, req.query.arvTime, (dao_res) => {
-            if (!dao_res) alert('SeatReservationDAO.searchSeats Query Error');
+    RsrvDAO.searchSeats(req.query.bus_code, (dao_res) => {
+            if (!dao_res) alert('ReservationDAO.searchSeats Query Error');
+            const len = dao_res.length;
             let seats = new Array();
-            for (seat in reservedSeats) {
-                const num = seat.seat_number;
+            for (let i in dao_res) {
+                const num = dao_res[i].seat_number
                 seats[num] = new Seat(num, true);
             }
             for (let i = 1; i <= 28; i++) {
-                if (seats[i] !== undefined) continue;
-                seats[i] = new Seat(i, false);
+                if (seats[i] === undefined) seats[i] = new Seat(i, false);
             }
             res.render('', {'' :Seat.make_seats_display(seats)}); // 채워야 함
         });

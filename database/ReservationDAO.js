@@ -6,11 +6,13 @@ module.exports.connection = require('../database/mysql.js');
 const conn = module.exports.connection;
 
 
-class SeatReservationDAO {
-    static searchSeats(date, dptLoc, arvLoc, dptTime, arvTime, callback) {
-        const bus_code = date+dptLoc+arvLoc+dptTime+arvTime;
-        const sql = 'SELECT * FROM seat_reservation where bus_code = "' + bus_code 
-            + '" order by seat_number';
+class ReservationDAO {
+    static searchSeats(bus_code, callback) {
+        const sql = 
+            'SELECT * '
+            +'FROM reservation_seats'
+            +'where bus_code = "' + bus_code + '" '
+            +'order by seat_number';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
             if (query_err) ret =  0; // error
@@ -18,5 +20,10 @@ class SeatReservationDAO {
             callback(ret);
         });
     }
+
+    static searchReservation() {
+        
+    }
 }
-module.exports.searchSeats = SeatReservationDAO.searchSeats;
+
+module.exports.searchSeats = ReservationDAO.searchSeats;

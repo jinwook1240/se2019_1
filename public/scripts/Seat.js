@@ -6,7 +6,7 @@ class Seat {
 
     static make_seats_display(seats) {
         var seatNum = 1;
-        document.write("<table>")
+        document.write("<table>");
         for(var row = 1; row <= 9; row++){
             for(var column = 1; column <= 4; column++){
                 if(row == 1 && column == 3)
@@ -21,4 +21,7 @@ class Seat {
         }
         document.write("</table>");
     }
+
 }
+
+module.exports = router;

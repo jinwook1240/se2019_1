@@ -11,7 +11,7 @@ router.get('/signIn', (req, res) => { // log in
 });
 
 router.get('/signUp', (req, res) => { // sign up
-    Member.signUp(req.query.id, req.query.pw, 
+    Member.signUp(req.query.id, req.query.pw,
         req.query['name'], req.query.phone, req.query.email, res);
 });
 
@@ -35,22 +35,22 @@ class Member {
     }
     static signIn(id, pw, req, res) {
         if(id===undefined && pw === undefined){
-            res.render('SignIn', {'loginMessage':undefined});
+            res.render('signIn', {'loginMessage':undefined});
         }
         else if(id===undefined){
-            res.render('SignIn', {'loginMessage':"please type id"});
+            res.render('signIn', {'loginMessage':"please type id"});
         }
         else if(pw===undefined){
-            res.render('SignIn', {'loginMessage':"please type pw"});
+            res.render('signIn', {'loginMessage':"please type pw"});
         }
         else{
             MemberDAO.searchMember(id, pw, (dao_res) => {
                 if (dao_res === 0) {
-                    res.render('SignIn', {'loginMessage':"Something went wrong!!"});
+                    res.render('signIn', {'loginMessage':"Something went wrong!!"});
                 } else if (dao_res === 1) {
-                    res.render('SignIn', {'loginMessage':"Input ID doesn't exist!!"});
+                    res.render('signIn', {'loginMessage':"Input ID doesn't exist!!"});
                 } else if (dao_res === 2) {
-                    res.render('SignIn', {'loginMessage':"Input password is wrong!!"});
+                    res.render('signIn', {'loginMessage':"Input password is wrong!!"});
                 } else {
                     if(!req.session.logined){
                         res.redirect('/');
@@ -66,12 +66,12 @@ class Member {
     static signUp(id, pw, name, phone, email, res) {
         MemberDAO.insertMember(id, pw, name, phone, email, (dao_res) => {
             if (dao_res) res.redirect('/');
-            else res.render('SignUp', {'signupMessage':""});
+            else res.render('signUp', {'signupMessage':""});
         });
     }
 
     static signOut(res) {
-        res.render('SignOut', {});
+        res.render('signOut', {});
     }
 
     static updateCoin(id, coin, res) {

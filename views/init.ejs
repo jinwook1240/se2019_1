@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>firstUI</title>
+    <%- include('forms/head'); -%>
   </head>
   <body>
     <header>
-      <h1>6조 좌석 예매 프로그램</h1>
+      <%- include('forms/header'); -%>
     </header><br>
     <label for="date">날짜 : </label>
     <input type="text" id="date" name="date" value=""><br>
@@ -19,8 +18,9 @@
     <input type="button" id="searchButton" value="조회">
     <input type="button" value="취소">
     <br><br>
-    <input type="button" value="로그인">
-    <input type="button" value="회원가입">
+    <footer>
+      <%- include('forms/footer'); -%>
+    </footer>
   </body>
   <script>
     const button = document.getElementById("searchButton");

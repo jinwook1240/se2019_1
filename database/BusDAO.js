@@ -18,8 +18,11 @@ module.exports.getBusList = (callback) => {
     })
 };
 module.exports.searchBus = (condition, callback) => {
-    console.log(TAG+".searchBus Query : "+'SELECT * FROM jjj.bus WHERE ' + condition);
-    connection.query('SELECT * FROM jjj.bus WHERE ' + condition, (query_err, query_res, query_fields) => {
+    let sql = 'SELECT * FROM jjj.bus';
+    if(condition){
+        sql+='WHERE ' + condition;
+    }
+    connection.query(sql, (query_err, query_res, query_fields) => {
         if (query_err) {
             console.log(query_err);
             return;

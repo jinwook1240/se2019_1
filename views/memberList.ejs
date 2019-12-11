@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+    <body>
+        <table id="memberList">
+            <tr>
+            <% for (var key in memberlist[0]) { %>
+                <% if (key === 'passwd') continue; %>
+                <th><%= key %></th>
+            <% } %>
+            </tr>
+            <% for (var idx in memberlist) { %>
+            <tr><% for (var key in memberlist[0])  { %>
+                <% if (key === 'passwd') continue; %>
+                <td><%= memberlist[idx][key] %></td>
+                <% } %>
+            </tr>
+            <% } %>
+        </table>
+    </body>
+</html>

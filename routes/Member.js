@@ -50,7 +50,7 @@ class Member {
             res.render('signIn', message);
         }
         else{
-            MemberDAO.searchMember(id, pw, (dao_res) => {
+            MemberDAO.authMember(id, pw, (dao_res) => {
                 if (dao_res === 0) {
                   message['loginMessage'] = "Something went wrong!!";
                     DEBUG_LOG(FUNCTIONTAG, "Something went wrong!!");

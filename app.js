@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const init = require('./routes/init');
-const login = require('./routes/login');
 
 const Bus = require('./routes/Bus');
 const BusList = require('./routes/BusList');
@@ -38,7 +37,6 @@ app.use(session({  // 2
 }));
 
 app.use('/', init);
-app.use('/login', login);
 app.use('/bus', Bus);
 app.use('/buslist', BusList);
 app.use('/member', Member);

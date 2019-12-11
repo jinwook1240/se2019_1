@@ -9,7 +9,7 @@ const conn = module.exports.connection;
 class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
-            'SELECT * '
+            'SELECT seat_number '
             +'FROM reservation_seats'
             +'where bus_code = "' + bus_code + '" '
             +'order by seat_number';

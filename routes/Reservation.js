@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const BusDAO = require("../database/BusDAO");
-const SeatRsrvDAO = require("../database/SeatReservationDAO");
+const RsrvDAO = require("../database/ReservationDAO");
 
 router.get('/', (req, res)=> {
     const condition = 'bus_code="'+req.query.bus_code+'"';
@@ -12,3 +12,5 @@ router.get('/', (req, res)=> {
         res.render('Bus', {'buslist':buslist});
     });
 });
+
+module.exports = router;

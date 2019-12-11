@@ -23,15 +23,30 @@ router.post('/', (req, res)=> {
     });
 });
 router.get('/busAdd', (req, res)=>{
-    res.render('busAdd',{});
+    if(!req.query === {}){
+        res.render('busAdd',{'alertmessage':undefined, 'script':undefined, "user_id":req.session.user_id});
+    }
+    else{
+        for(let idx = 0;idx < Object.keys(req.query).length ;idx++){
+            let key = Object.keys(req.query)[idx];
+            if(req.query[key] === ""){
+                delete req.query[key];
+            }
+        }
+        BusDAO.createBus(req.query, (q_err, q_res, q_field)=>{
+            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', 'script':undefined, "user_id":req.session.user_id});
+            else res.render('busAdd',{'alertmessage':'bus added successfully!', 'script':'window.location.href="/"', "user_id":req.session.user_id});
+        });
+    }
+
 });
 
 router.get('/busdetail', (req, res)=> {
-    RsrvDAO.searchSeats(req.query.bus_code, (dao_res) => {
-            if (!dao_res) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
+    RsrvDAO.searchSeats(req.query.bus_code, (reservedSeats) => {
+            if (!reservedSeats) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
             let seats = new Array();
-            for (let i in dao_res) {
-                const num = dao_res[i].seat_number
+            for (let i in reservedSeats) {
+                const num = reservedSeats[i]['seat_number']
                 seats[num] = new Seat(num, true);
             }
             for (let i = 1; i <= 28; i++) {

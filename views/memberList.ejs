@@ -1,23 +1,27 @@
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="/stylesheets/style.css">
-    </head>
-    <body>
-        <table id="memberList">
-            <tr>
-            <% if(memberlist)for (var key in memberlist[0]) { %>
-                <% if (key === 'passwd') continue; %>
-                <th><%= key %></th>
-            <% } %>
-            </tr>
-            <% for (var idx in memberlist) { %>
-            <tr><% for (var key in memberlist[0])  { %>
-                <% if (key === 'passwd') continue; %>
-                <td><%= memberlist[idx][key] %></td>
+
+
+<table id="userList">
+    <tr><!--
+    <% /*for (var key in memberlist[0]) { %>
+        <% if (key === 'passwd') continue; %>
+        <th><%= key %></th>
+    <% } */%>-->
+        <th>id</th><th>역할</th> <th>전화번호</th> <th>이메일</th> <th>코인</th> <th> </th>
+    </tr>
+    <% for (var idx in memberlist) { %>
+        <tr>
+            <% for (var key in memberlist[0])  { %>
+                <% if (key === 'passwd') { %>
+                    <% /*user_codes.push(memberlist[idx]['user_code']); */%>
+                <% } else if(key === 'coin') { %>
+                        <td><input type="number" value="<%= memberlist[idx][key] %>" id="coin_<%= idx %>"></td>
+                    <% } else { %>
+                    <td><%= memberlist[idx][key] %></td>
                 <% } %>
-            </tr>
             <% } %>
-        </table>
-    </body>
-</html>
+            <td><input type="button" name="reservation" value="코인 조정"
+                       onclick="updateCoin('<%= memberlist[idx]['member_id'] %>', 'coin_<%= idx %>')"
+                       id="button_<%= idx %>"></td>
+        </tr>
+    <% } %>
+</table>

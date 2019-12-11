@@ -50,11 +50,14 @@ class MemberDAO {
         });
     }
 
-    static updateCoin(id, coin) {
-        const sql = 'UPDATE jjj.member SET coin = "'+coin+'" where id = "'+id+'"';
+    static updateCoin(id, coin, callback ) {
+        const sql = 'UPDATE jjj.member SET coin = "'+coin+'" where member_id = "'+id+'"';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
-            if (query_err) ret =  false; // error
+            if (query_err) {
+                console.error(query_err);
+                ret =  false;
+            } // error
             else ret = true;
             callback(ret);
         });

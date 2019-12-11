@@ -33,3 +33,16 @@ function searchUser(){
     xhr.open('GET', '/memberlist?'+formstr);
     xhr.send();
 }
+
+function updateCoin(id, coinInput){
+    var xhr = new XMLHttpRequest();
+    if (!xhr) {
+        alert('Giving up :( Cannot create an XMLHTTP instance');
+        return false;
+    }
+    xhr.onload = ()=>{
+        alert(xhr.responseText);
+    };
+    xhr.open('GET', '/member/updateCoin?coin='+document.getElementById(coinInput).value+"&id="+id);
+    xhr.send();
+}

@@ -1,9 +1,9 @@
 <table id="busList">
     <tr><!--
-    <% for (var key in buslist[0]) { %>
+    <% /*for (var key in buslist[0]) { %>
         <% if (key === 'bus_code') continue; %>
         <th><%= key %></th>
-    <% } %>-->
+    <% } */%>-->
         <th>날짜</th><th>출발지</th> <th>도착지</th> <th>출발시각</th> <th>도착시각</th> <th>가격</th> <th>빈좌석</th>
     </tr>
     <% for (var idx in buslist) { %>
@@ -21,5 +21,3 @@
     </tr>
     <% } %>
 </table>
-<script>
-</script>

@@ -6,8 +6,9 @@ const BusDAO = require("../database/BusDAO");
 
 
 router.get('/', (req, res)=> {
-    let condition = undefined;
+    let condition = "";
     let beforecondition = false;
+    console.log(req.body);
     if(req.query.date && req.query.date !== ""){
         condition = 'date="'+req.query.date;
         beforecondition = true;
@@ -16,20 +17,20 @@ router.get('/', (req, res)=> {
         if(beforecondition){
             condition+= " and"
         }
-        condition+='" departure_location="'+req.query.dptloc
+        condition+=' departure_location="'+req.query.dptloc;
         beforecondition = true;
     }
     if(req.query.arvloc && req.query.arvloc !== ""){
         if(beforecondition){
             condition+= " and"
         }
-        condition+='" arrival_location="'+req.query.arvloc+'"';
+        condition+=' arrival_location="'+req.query.arvloc+'"';
         beforecondition = true;
     }
 
     console.log("condition:"+condition);
     BusDAO.searchBus(condition, (buslist)=>{
-        console.log(buslist);
+        //console.log(buslist);
         res.render('BusList', {
             'buslist': buslist,
             'bus_codes': new Array()

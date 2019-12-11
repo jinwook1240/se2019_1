@@ -7,20 +7,21 @@
     <header>
       <%- include('forms/header'); -%>
     </header><br>
-    <form id="busSearchForm">
-      <label for="date">날짜 : </label>
-      <input type="text" id="date" name="date" value=""><br>
-      <label for="dptloc">출발지 : </label>
-      <input type="text" id="dptloc" name="dptloc" value=""><br>
-      <label for="arvloc">도착지 : </label>
-      <input type="text" id="arvloc" name="arvloc" value=""><br>
+    <form id="userSearchForm">
+      <label for="">ID : </label>
+      <input type="text" name="id"><br>
+      <label for="">이름 : </label>
+      <input type="text" name="name"><br>
+      <label for="">전화번호 : </label>
+      <input type="text" name="phone"><br>
+      <label for="">이메일 : </label>
+      <input type="text" name="email"><br><br>
       <br>
-      <input type="button" id="searchButton" value="조회" onclick="searchBus();">
-      <input type="button" value="취소">
+      <input type="button" id="searchButton" value="조회" onclick="searchUser();">
       <input type="button" id="searchButton" value="버스 추가" onclick="window.location.href='/bus/BusAdd'">
       <br><br>
     </form>
-    <div id="busTable"></div>
+    <div id="userTable"></div>
     <footer>
       <%- include('forms/footer'); -%>
     </footer>

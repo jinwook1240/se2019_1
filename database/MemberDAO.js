@@ -23,7 +23,7 @@ class MemberDAO {
     }
     static searchMember(condition, callback) {
         let sql = 'SELECT * FROM jjj.member';
-        if(condition!==""){
+        if(condition!=="" && condition){
             sql += ' WHERE ' + condition;
         }
         conn.query(sql, (query_err, query_res, query_fields) => {

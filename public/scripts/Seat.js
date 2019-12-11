@@ -21,7 +21,6 @@ class Seat {
         }
         document.write("</table>");
     }
-
 }
 
 module.exports = router;

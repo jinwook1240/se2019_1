@@ -12,7 +12,10 @@ router.get('/', (req, res)=> {
     console.log("condition:"+condition);
     BusDAO.searchBus(condition, (buslist)=>{
         console.log(buslist);
-        res.render('BusList', {'buslist':buslist});
+        res.render('BusList', {
+            'buslist': buslist,
+            'bus_codes': bus_codes = new Array()
+        });
     });
 });
 

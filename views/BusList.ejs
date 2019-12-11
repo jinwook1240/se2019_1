@@ -1,40 +1,22 @@
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="/stylesheets/style.css">
-        <meta charset="utf-8">
-        <title>버스 목록</title>
-    </head>
-    <body>
-        <table id="busList">
-            <tr>
-            <% for (var key in buslist[0]) { %>
-                <% if (key === 'bus_code') continue; %>
-                <th><%= key %></th>
+
+<table id="busList">
+    <tr><!--
+    <% for (var key in buslist[0]) { %>
+        <% if (key === 'bus_code') continue; %>
+        <th><%= key %></th>
+    <% } %>-->
+        <th>날짜</th><th>출발지</th> <th>도착지</th> <th>출발시각</th> <th>도착시각</th> <th>가격</th> <th>빈좌석</th>
+    </tr>
+    <% for (var idx in buslist) { %>
+    <tr>
+        <% for (var key in buslist[0])  { %>
+            <% if (key === 'bus_code') { %>
+                <% bus_codes.push(buslist[idx]['bus_code']); %>
+            <% } else { %>
+        <td><%= buslist[idx][key] %></td>
             <% } %>
-            </tr>
-            <% for (var idx in buslist) { %>
-            <tr>
-                <% for (var key in buslist[0])  { %>
-                    <% if (key === 'bus_code') { %>
-                        <% bus_codes.push(buslist[idx]['bus_code']); %>
-                    <% } else { %>
-                <td><%= buslist[idx][key] %></td>
-                    <% } %>
-                <% } %>
-                <td><input type="button" name="reservation" value="예매" id="button_<%= idx %>"></td>
-            </tr>
-            <% } %>
-        </table>
-    </body>
-    <script type="text/javascript">
-        const buttons = document.getElementsByName("reservation");
-        const len = buttons.length;
-        for (let i = 0; i < len; i++) {
-            buttons[i].onclick = () => {
-                const query = "?bus_code="+ <%- JSON.stringify(bus_codes) %>[i];
-                location.href = location.origin+"/reservation"+query;
-            }
-        }
-    </script>
-</html>
+        <% } %>
+        <td><input type="button" name="reservation" value="예매" id="button_<%= idx %>"></td>
+    </tr>
+    <% } %>
+</table>

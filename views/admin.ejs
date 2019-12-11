@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <%- include('forms/head'); -%>
+  </head>
+  <body>
+    <header>
+      <%- include('forms/header'); -%>
+    </header><br>
+    <form id="userSearchForm">
+      <label for="">ID : </label>
+      <input type="text" name="id"><br>
+      <label for="">이름 : </label>
+      <input type="text" name="name"><br>
+      <label for="">전화번호 : </label>
+      <input type="text" name="phone"><br>
+      <label for="">이메일 : </label>
+      <input type="text" name="email"><br><br>
+      <br>
+      <input type="button" id="searchButton" value="조회" onclick="searchUser();">
+      <input type="button" id="searchButton" value="버스 추가" onclick="window.location.href='/bus/BusAdd'">
+      <br><br>
+    </form>
+    <div id="userTable"></div>
+    <footer>
+      <%- include('forms/footer'); -%>
+    </footer>
+  </body>
+</html>

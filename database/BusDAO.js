@@ -18,7 +18,7 @@ module.exports.getBusList = (callback) => {
     })
 };
 module.exports.searchBus = (condition, callback) => {
-    let sql = 'SELECT * FROM jjj.bus';
+    let sql = 'SELECT * FROM jjj.bus ';
     if(condition){
         sql+='WHERE ' + condition;
     }

@@ -11,12 +11,16 @@
     <tr>
         <% for (var key in buslist[0])  { %>
             <% if (key === 'bus_code') { %>
-                <% bus_codes.push(buslist[idx]['bus_code']); %>
+                <% //bus_codes.push(buslist[idx]['bus_code']); %>
             <% } else { %>
         <td><%= buslist[idx][key] %></td>
             <% } %>
         <% } %>
-        <td><input type="button" name="reservation" value="예매" id="button_<%= idx %>"></td>
+        <td><input type="button" name="reservation" value="예매"
+                   onclick="location.href = location.origin + '/reservation'+'?bus_code='+'<%= buslist[idx]['bus_code'] %>'"
+                   id="button_<%= idx %>"></td>
     </tr>
     <% } %>
 </table>
+<script>
+</script>

@@ -7,6 +7,7 @@ function searchBus(){
     }
     xhr.onreadystatechange = ()=>{
         document.getElementById("busTable").innerHTML = xhr.responseText;
+        onBusTableLoad();
     };
     let formstr = "";
     for(let key of formData.keys()){
@@ -25,6 +26,10 @@ function searchUser(){
     xhr.onreadystatechange = ()=>{
         document.getElementById("userTable").innerHTML = xhr.responseText;
     };
-    xhr.open('GET', '/memberlist');
-    xhr.send(formData);
+    let formstr = "";
+    for(let key of formData.keys()){
+        formstr +=key+"="+formData.get(key)+"&";
+    }
+    xhr.open('GET', '/memberlist?'+formstr);
+    xhr.send();
 }

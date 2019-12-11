@@ -6,7 +6,7 @@
     <body>
         <table id="memberList">
             <tr>
-            <% for (var key in memberlist[0]) { %>
+            <% if(memberlist)for (var key in memberlist[0]) { %>
                 <% if (key === 'passwd') continue; %>
                 <th><%= key %></th>
             <% } %>

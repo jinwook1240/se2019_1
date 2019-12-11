@@ -14,7 +14,7 @@ router.get('/', (req, res)=> {
         console.log(buslist);
         res.render('BusList', {
             'buslist': buslist,
-            'bus_codes': bus_codes = new Array()
+            'bus_codes': new Array()
         });
     });
 });

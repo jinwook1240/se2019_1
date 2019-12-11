@@ -7,7 +7,7 @@ const conn = module.exports.connection;
 
 
 class MemberDAO {
-    static searchMember(id, pw, callback) {
+    static authMember(id, pw, callback) {
         const sql = 'SELECT * FROM jjj.member WHERE member_id="' + id + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
             let ret;
@@ -19,6 +19,20 @@ class MemberDAO {
             else if (query_res[0]['passwd'] != pw) ret = 2; // password is wrong
             else ret = query_res[0];
             callback(ret);
+        });
+    }
+    static searchMember(condition, callback) {
+        let sql = 'SELECT * FROM jjj.member';
+        if(condition!==""){
+            sql += ' WHERE ' + condition;
+        }
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            let ret;
+            if (query_err){
+                ret =  0; // error
+                console.log(query_err);
+            }
+            callback(query_res);
         });
     }
 
@@ -46,6 +60,4 @@ class MemberDAO {
         });
     }
 }
-module.exports.searchMember = MemberDAO.searchMember;
-module.exports.insertMember = MemberDAO.insertMember;
-module.exports.updateCoin = MemberDAO.updateCoin;
+module.exports = MemberDAO;

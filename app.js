@@ -17,6 +17,8 @@ const MemberList = require('./routes/MemberList');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
+const Reservation = require('./routes/Reservation');
+
 const app = express();
 
 // view engine setup
@@ -41,6 +43,7 @@ app.use('/bus', Bus);
 app.use('/buslist', BusList);
 app.use('/member', Member);
 app.use('/memberlist', MemberList);
+app.use('/reservation', Reservation);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

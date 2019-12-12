@@ -18,13 +18,13 @@ class Reservation {
     }
 };
 
-function tempCallback(err, res, callback) {
+function errorHandlingCallback(err, callback) {
     if (err) {
         console.log(err);
         callback(err);
         return;
     }
-    else console.log("tempCallback success");
+    else console.log("errorHandlingCallback success");
 }
 
 function paymentCallback(err, res, callback) {
@@ -101,32 +101,33 @@ class ReservationDAO {
     static reserveSeats(bus_code, member_id, seats, callback) {
         let sql = 'start transaction;'
         conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            errorHandlingCallback(query_err, callback);
         });
         sql = 'insert into reservation values('
             +'"' + bus_code+member_id + '", '
             +'"' + bus_code + '", '
             +'"' + member_id + '");';
         conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            errorHandlingCallback(query_err, callback);
         });
         for (let i in seats) {
             sql = 'insert into reservation_seats values('
             +'"' + bus_code + '", '
             +'' + seats[i] + ');';
             conn.query(sql, (query_err, query_res, query_fields) => {
-                tempCallback(query_err, query_res, callback);
+                errorHandlingCallback(query_err, callback);
             });
         }
         // pay 부분 확인 필요
-        let pay;
         sql = 'select rate from bus where bus_code = "' + bus_code + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
-            pay = paymentCallback(query_err, query_res, callback) * seats.length;
-        });
-        sql = 'update member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
-        conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            errorHandlingCallback(query_err, callback)
+            const rate = query_res[0]['rate'];
+            const pay = rate * seats.length;
+            sql = 'update jjj.member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
         });
         sql = "commit;"
         conn.query(sql, (query_err, query_res, query_fields) => {

@@ -38,7 +38,7 @@ router.get('/list', (req, res)=> {
     });
 });
 
-router.post('/reserve', (req, res, next) => {
+router.post('/reserve', (req, res) => {
     const bus_code = req.body['bus_code'];
     const member_id = req.body['member_id'];
     const seats = req.body['seats'];

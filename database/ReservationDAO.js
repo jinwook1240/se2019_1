@@ -72,25 +72,28 @@ class ReservationDAO {
                 return;
             }
             const len = query_res.length;
-            let list = new Array();
             if (len == 0) {
                 callback(null, list);
                 return;
             }
+            const list = new Array();
             let reservation = new Reservation(query_res[0]);
             let curr_bus_code = reservation['bus_code'];
             let seats = reservation['seats'];
+            let push_flag = true;
             for (let i = 1; i < len; i++) {
                 const obj = query_res[i];
                 if (curr_bus_code == obj['bus_code']) { // 같은 버스면 좌석 추가
                     seats.push(obj['seat_number']);
+                    push_flag = true;
                 } else { // 다른 버스면 예약을 리스트에 추가
                     list.push(reservation);
                     reservation = new Reservation(obj);
                     seats = reservation['seats'];
+                    push_flag = false;
                 }
             }
-            console.log(list);
+            if (push_flag) list.push(reservation);
             callback(null, list);
         });
     }

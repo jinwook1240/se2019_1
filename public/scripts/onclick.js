@@ -7,15 +7,10 @@ function searchBus(){
     }
     xhr.onreadystatechange = ()=>{
         document.getElementById("busTable").innerHTML = xhr.responseText;
-        onBusTableLoad();
     };
     let formstr = "";
     for(let key of formData.keys()){
         formstr +=key+"="+formData.get(key)+"&";
-    }
-    const inputs = document.getElementsByTagName('input');
-    for (let i in inputs) {
-        if (inputs[i].getAttribute('type') === 'text') inputs[i].value = "";
     }
     xhr.open('GET', '/buslist?'+formstr);
     xhr.send();

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <%- include('forms/head'); -%>
+  </head>
+  <body>
+    <header>
+      <%- include('forms/header'); -%>
+    </header><br>
+    <form id="busSearchForm">
+      <label for="date">날짜 : </label>
+      <input type="text" id="date" name="date" value=""><br>
+      <label for="dptloc">출발지 : </label>
+      <input type="text" id="dptloc" name="dptloc" value=""><br>
+      <label for="arvloc">도착지 : </label>
+      <input type="text" id="arvloc" name="arvloc" value=""><br>
+      <br>
+      <input type="button" id="searchButton" value="조회" onclick="searchBus();">
+      <br><br>
+    </form>
+    <div id="busTable"></div>
+    <footer>
+      <%- include('forms/footer'); -%>
+    </footer>
+  </body>
+</html>

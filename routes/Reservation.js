@@ -23,13 +23,13 @@ router.get('/list', (req, res)=> {
         /*
         list : list {
             obj : Reservation {
-                'dates': dates,                             // 예매 날짜
-                'departure_locations': depature_locations,  // 출발지
-                'arrival_locations': arrival_locations,     // 도착지
+                'date': date,                             // 예매 날짜
+                'departure_location': depature_location,  // 출발지
+                'arrival_location': arrival_location,     // 도착지
                 'departure_time': depature_time,            // 출발 시간
                 'arrival_time': arrival_time,               // 도착 시간
                 'seats': seats,                             // 좌석들의 배열
-                'rates': rats,                              // 요금
+                'rate': rate,                              // 요금
             }
             objs...
         }

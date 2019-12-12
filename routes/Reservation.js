@@ -38,8 +38,12 @@ router.get('/list', (req, res)=> {
             objs...
         }
         */
-        console.log("list: ", list);
-        res.render('reservationList', {"list": list});
+        // console.log("list: ", list);
+        res.render('reservationList', {
+            "list": list,
+            "user_id": member_id,
+            "user_coin": req.session['user_coin']
+        });
     });
 });
 

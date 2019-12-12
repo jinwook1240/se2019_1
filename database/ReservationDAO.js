@@ -27,15 +27,6 @@ function errorHandlingCallback(err, callback) {
     else console.log("errorHandlingCallback success");
 }
 
-function paymentCallback(err, res, callback) {
-    if (err) {
-        console.log(err);
-        callback(err);
-        return;
-    }
-    return res[0]['rate'];
-}
-
 class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
@@ -103,12 +94,19 @@ class ReservationDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             errorHandlingCallback(query_err, callback);
         });
-        sql = 'insert into reservation values('
+        sql = 'select count(*) as cnt from reservation '
+            +'where reservation_code = "' + bus_code+member_id + '"'
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            errorHandlingCallback(query_err, callback);
+            const cnt = query_res[0]['cnt'];
+            if (cnt) return;
+            sql = 'insert into reservation values('
             +'"' + bus_code+member_id + '", '
             +'"' + bus_code + '", '
             +'"' + member_id + '");';
-        conn.query(sql, (query_err, query_res, query_fields) => {
-            errorHandlingCallback(query_err, callback);
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
         });
         for (let i in seats) {
             sql = 'insert into reservation_seats values('
@@ -121,10 +119,15 @@ class ReservationDAO {
         // pay 부분 확인 필요
         sql = 'select rate from bus where bus_code = "' + bus_code + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
+            const size = seats.length;
             errorHandlingCallback(query_err, callback)
             const rate = query_res[0]['rate'];
-            const pay = rate * seats.length;
+            const pay = rate * size;
             sql = 'update jjj.member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
+            sql = 'update bus set empty_seats = empty_seats - ' + size +' where bus_code = "' + bus_code +'"';
             conn.query(sql, (query_err, query_res, query_fields) => {
                 errorHandlingCallback(query_err, callback);
             });

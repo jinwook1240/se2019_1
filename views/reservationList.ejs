@@ -1,7 +1,7 @@
 <% if(list.length == 0) { %>
     <h1>예매 내역이 없습니다.</h1>
 <%  } else { %>
-    <div style="border: 1px solid black">
+    <div style="border: 1px solid black; display: inline-block">
         <% for(var i = 0; i < list.length; i++) { %>
             <label for="date">예매 날짜 : </label><%= list[i]['date'] %><br>
             <label for="departure_location">출발지 : </label><%= list[i]['departure_location'] %><br>

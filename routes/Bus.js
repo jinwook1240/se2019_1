@@ -29,7 +29,7 @@ router.post('/', (req, res)=> {
 });
 router.get('/busAdd', (req, res)=>{
     if(!req.query === {}){
-        res.render('busAdd',{'alertmessage':undefined, "user_id":req.session.user_id});
+        res.render('busAdd',{'alertmessage':undefined, "user_id":req.session.user_id, 'user_coin':req.session.user_coin});
     }
     else{
         for(let idx = 0;idx < Object.keys(req.query).length ;idx++){
@@ -40,7 +40,7 @@ router.get('/busAdd', (req, res)=>{
         }
         console.log(req.query);
         BusDAO.createBus(req.query, (q_err, q_res, q_field)=>{
-            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', "user_id":req.session.user_id});
+            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', "user_id":req.session.user_id, "user_coin":req.session.user_coin});
             else res.redirect("/?message=bus added successfully!");
         });
     }
@@ -55,7 +55,8 @@ router.get('/detail', (req, res)=> {
         res.render('busDetail', { // 좌석 뽑아낼 ejs 입력
             'bus_code': req.query.bus_code,
             'row' : JSON.stringify(dao_res[0]),
-            "user_id":req.session.user_id
+            "user_id":req.session.user_id,
+            'user_coin':req.session.user_coin
         });
     });
 });

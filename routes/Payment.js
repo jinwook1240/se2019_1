@@ -11,8 +11,10 @@ router.get('/', (req, res)=> {
         res.redirect("/?message=로그인 후 이용하세요")
     }
     res.render('payment',{"user_id":req.session.user_id,
-    'bus':req.query.bus,
-    'seat': req.query.seat_list});
+        'bus':req.query.bus,
+        'seat': req.query.seat_list,
+        'user_coin':req.session.user_coin
+    });
 });
 router.get('/confirm', (req, res)=> {
     if(!req.session.user_id){
@@ -25,9 +27,9 @@ router.get('/confirm', (req, res)=> {
     const bus_code = req.query['bus_code'];
     const member_id = req.session.user_id;
     const seats = JSON.parse(req.query.seat_sel);
-    MemberDAO.getCoin('member_id="'+req.session.user_id+'"', (member_res)=>{
+    MemberDAO.getCoin(req.session.user_id, (member_res)=>{
         BusDAO.searchBus('bus_code="'+bus_code+'"', (bus_res)=>{
-            if(member_res[0].coin<bus_res[0].rate*req.query.seat_sel.length){
+            if(member_res<bus_res[0].rate*req.query.seat_sel.length){
                 res.redirect('/?message=코인이 부족합니다.');
                 return;
             }

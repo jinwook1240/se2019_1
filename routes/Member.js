@@ -33,7 +33,7 @@ class Member {
         this.coin = coin;
     }
     static signIn(id, pw, req, res) {
-        let message = {"user_id":req.session.user_id};
+        let message = {"user_id":req.session.user_id, 'user_coin':req.session.user_coin};
         const FUNCTIONTAG = "signIn";
         if(id===undefined && pw === undefined){
             message['loginMessage'] = undefined;
@@ -91,6 +91,7 @@ class Member {
 
     static signOut(req, res) {
         req.session.user_id=undefined;
+        req.session.user_coin = undefined;
         req.session.destroy();
         res.clearCookie('sid');
         res.render('signOut', {});

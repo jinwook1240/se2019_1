@@ -116,5 +116,6 @@ function onSubmitClicked(){
     }
     delete selectedSeats[selectedSeats.indexOf(selectedSeatsDummy)];
     selectedSeats = selectedSeats.filter(String);
+    selectedSeats.sort(function(a,b) {return a-b;});
     window.location.href="/payment?bus="+JSON.stringify(row)+"&seat_list="+JSON.stringify(selectedSeats);
 }

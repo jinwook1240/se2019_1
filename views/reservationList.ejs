@@ -1,6 +1,17 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <%- include('forms/head'); -%>
+  </head>
+  <body>
+    <header>
+        <%- include('forms/header'); -%>
+    </header>
 <% if(list.length == 0) { %>
-    <h1>예매 내역이 없습니다.</h1>
+    <h2>예매 내역이 없습니다.</h2>
 <%  } else { %>
+    <h2>예매 내역</h2>
     <% for(let i = 0; i < list.length; i++) { %>
         <% const reservation = list[i]; %> 
         <div style="border: 1px solid black; display: inline-block">
@@ -12,7 +23,6 @@
             <% 
                 let seats = '';
                 for(let j in reservation['seats']) {
-                    console.log(String(reservation['seats'][j]));
                     seats += String(reservation['seats'][j]) + ', '; 
                 }
                 seats = seats.slice(0,-2);
@@ -22,3 +32,8 @@
         </div>
     <% } %>
 <% } %>
+        <footer>
+            <%- include('forms/footer'); -%>
+        </footer>
+    </body>
+</html>

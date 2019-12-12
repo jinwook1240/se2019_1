@@ -14,7 +14,7 @@ class Reservation {
         this.departure_time = obj['departure_time'];
         this.arrival_time = obj['arrival_time'];
         this.rate = obj['rate'];
-        this.seats = [obj['seat_number']]; // list라는 것에 유의
+        this.seats = [Number(obj['seat_number'])]; // list라는 것에 유의
     }
 };
 
@@ -49,13 +49,14 @@ class ReservationDAO {
         let sql = 
             'select bus_code, date, departure_location, arrival_location, '
             +'departure_time, arrival_time, rate, seat_number '
-            +'from bus natural join ('
+            +'from bus join ('
             +'select rsrv.bus_code, seat_number '
             +'from reservation as rsrv, reservation_seats as seats '
             +'where rsrv.member_id="' + member_id + '" '
             +'and rsrv.bus_code = seats.bus_code '
             +') as k '
-            +'order by date desc, departure_time desc, arrival_time desc, seat_number';
+            +'using (bus_code) '
+            +'order by bus_code desc, seat_number;'
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) { // error
                 console.log(query_err);
@@ -75,15 +76,18 @@ class ReservationDAO {
             for (let i = 1; i < len; i++) {
                 const obj = query_res[i];
                 if (curr_bus_code == obj['bus_code']) { // 같은 버스면 좌석 추가
-                    seats.push(obj['seat_number']);
+                    seats.push(Number(obj['seat_number']));
                     push_flag = true;
                 } else { // 다른 버스면 예약을 리스트에 추가
+                    curr_bus_code = obj['bus_code'];
+                    seats.sort(function(a,b) {return a - b});
                     list.push(reservation);
                     reservation = new Reservation(obj);
                     seats = reservation['seats'];
                     push_flag = false;
                 }
             }
+            seats.sort(function(a,b) {return a - b;});
             if (push_flag) list.push(reservation);
             callback(null, list);
         });

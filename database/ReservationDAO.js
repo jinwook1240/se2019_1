@@ -27,6 +27,15 @@ function tempCallback(err, res, callback) {
     else console.log("tempCallback success");
 }
 
+function paymentCallback(err, res, callback) {
+    if (err) {
+        console.log(err);
+        callback(err);
+        return;
+    }
+    return res[0]['rate'];
+}
+
 class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
@@ -106,6 +115,16 @@ class ReservationDAO {
                 tempCallback(query_err, query_res, callback);
             });
         }
+        // pay 부분 확인 필요
+        let pay;
+        sql = 'select rate from bus where bus_code = "' + bus_code + '"';
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            pay = paymentCallback(query_err, query_res, callback) * seats.length;
+        });
+        sql = 'update member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            tempCallback(query_err, query_res, callback);
+        });
         sql = "commit;"
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) callback(query_err);

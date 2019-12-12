@@ -18,22 +18,13 @@ class Reservation {
     }
 };
 
-function tempCallback(err, res, callback) {
+function errorHandlingCallback(err, callback) {
     if (err) {
         console.log(err);
         callback(err);
         return;
     }
-    else console.log("tempCallback success");
-}
-
-function paymentCallback(err, res, callback) {
-    if (err) {
-        console.log(err);
-        callback(err);
-        return;
-    }
-    return res[0]['rate'];
+    else console.log("errorHandlingCallback success");
 }
 
 class ReservationDAO {
@@ -102,32 +93,45 @@ class ReservationDAO {
     static reserveSeats(bus_code, member_id, seats, callback) {
         let sql = 'start transaction;'
         conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            errorHandlingCallback(query_err, callback);
         });
-        sql = 'insert into reservation values('
+        sql = 'select count(*) as cnt from reservation '
+            +'where reservation_code = "' + bus_code+member_id + '"'
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            errorHandlingCallback(query_err, callback);
+            const cnt = query_res[0]['cnt'];
+            if (cnt) return;
+            sql = 'insert into reservation values('
             +'"' + bus_code+member_id + '", '
             +'"' + bus_code + '", '
             +'"' + member_id + '");';
-        conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
         });
         for (let i in seats) {
             sql = 'insert into reservation_seats values('
             +'"' + bus_code + '", '
             +'' + seats[i] + ');';
             conn.query(sql, (query_err, query_res, query_fields) => {
-                tempCallback(query_err, query_res, callback);
+                errorHandlingCallback(query_err, callback);
             });
         }
         // pay 부분 확인 필요
-        let pay;
         sql = 'select rate from bus where bus_code = "' + bus_code + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
-            pay = paymentCallback(query_err, query_res, callback) * seats.length;
-        });
-        sql = 'update member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
-        conn.query(sql, (query_err, query_res, query_fields) => {
-            tempCallback(query_err, query_res, callback);
+            const size = seats.length;
+            errorHandlingCallback(query_err, callback)
+            const rate = query_res[0]['rate'];
+            const pay = rate * size;
+            sql = 'update jjj.member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
+            sql = 'update bus set empty_seats = empty_seats - ' + size +' where bus_code = "' + bus_code +'"';
+            conn.query(sql, (query_err, query_res, query_fields) => {
+                errorHandlingCallback(query_err, callback);
+            });
         });
         sql = "commit;";
         conn.query(sql, (query_err, query_res, query_fields) => {

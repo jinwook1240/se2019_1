@@ -41,7 +41,7 @@ router.get('/busAdd', (req, res)=>{
 
 });
 
-router.get('/busdetail', (req, res)=> {
+router.get('/detail', (req, res)=> {
     RsrvDAO.searchSeats(req.query.bus_code, (err, reservedSeats) => {
             if (err) {
                 res.render('error',{'message':"버스 상세 조회에 실패하였습니다.", 'error':err});

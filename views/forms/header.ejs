@@ -3,7 +3,8 @@
 <a href="/member/signIn">로그인</a>
 <a href="/member/signUp">회원 가입</a>
 <% } else{ %>
-<%= user_id %>
 <a href="/member/signOut">로그아웃</a>
-<a href="/reservation/list">예매 내역</a>
+<a href="/reservation/list">예매 내역</a><br>
+<%= user_id -%> 님 환영합니다
+잔액 : <%= user_coin %>원
 <% } %>

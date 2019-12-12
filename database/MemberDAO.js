@@ -62,7 +62,12 @@ class MemberDAO {
             callback(ret);
         });
     }
-    static getCoin(condition, callback) {
+    static getCoin(member_id, callback) {
+        if(!member_id){
+            callback(undefined);
+            return;
+        }
+        let condition = 'member_id="'+member_id+'"';
         let sql = 'SELECT coin FROM jjj.member';
         if(condition!=="" && condition){
             sql += ' WHERE ' + condition;
@@ -72,8 +77,11 @@ class MemberDAO {
             if (query_err){
                 ret =  0; // error
                 console.log(query_err);
+                callback(undefined);
+                return;
             }
-            callback(query_res);
+            console.log("coin : ",query_res[0].coin);
+            callback(query_res[0].coin);
         });
     }
 }

@@ -3,6 +3,8 @@
 const express = require('express');
 const router = express.Router();
 const RsrvDAO = require("../database/ReservationDAO");
+const MemberDAO = require("../database/MemberDAO");
+const BusDAO = require("../database/BusDAO");
 
 router.get('/', (req, res)=> {
     if(!req.session.user_id){
@@ -23,13 +25,21 @@ router.get('/confirm', (req, res)=> {
     const bus_code = req.query['bus_code'];
     const member_id = req.session.user_id;
     const seats = JSON.parse(req.query.seat_sel);
-    RsrvDAO.reserveSeats(bus_code, member_id, seats, (err)=> {
-        if (err) {
-            console.log("err");
-            res.render('error',{'message':"좌석 예매에 실패하였습니다.", 'error':err});
-            return;
-        }
-        res.redirect('/?message=성공적으로 예매되었습니다.');
+    MemberDAO.getCoin('member_id="'+req.session.user_id+'"', (member_res)=>{
+        BusDAO.searchBus('bus_code="'+bus_code+'"', (bus_res)=>{
+            if(member_res[0].coin<bus_res[0].rate*req.query.seat_sel.length){
+                res.redirect('/?message=코인이 부족합니다.');
+                return;
+            }
+            RsrvDAO.reserveSeats(bus_code, member_id, seats, (err)=> {
+                if (err) {
+                    console.log("err");
+                    res.render('error',{'message':"좌석 예매에 실패하였습니다.", 'error':err});
+                    return;
+                }
+                res.redirect('/?message=성공적으로 예매되었습니다.');
+            });
+        });
     });
 });
 

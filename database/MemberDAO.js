@@ -62,5 +62,19 @@ class MemberDAO {
             callback(ret);
         });
     }
+    static getCoin(condition, callback) {
+        let sql = 'SELECT coin FROM jjj.member';
+        if(condition!=="" && condition){
+            sql += ' WHERE ' + condition;
+        }
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            let ret;
+            if (query_err){
+                ret =  0; // error
+                console.log(query_err);
+            }
+            callback(query_res);
+        });
+    }
 }
 module.exports = MemberDAO;

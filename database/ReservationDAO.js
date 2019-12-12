@@ -54,7 +54,8 @@ class ReservationDAO {
             +'from reservation as rsrv, reservation_seats as seats '
             +'where rsrv.member_id="' + member_id + '" '
             +'and rsrv.bus_code = seats.bus_code '
-            +') as k';
+            +') as k '
+            +'order by date desc, departure_time desc, arrival_time desc';
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) { // error
                 console.log(query_err);

@@ -15,6 +15,8 @@ const Seat = require('./routes/Seat');
 const Member = require('./routes/Member');
 const MemberList = require('./routes/MemberList');
 
+const Payment = require('./routes/Payment');
+
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 
@@ -46,6 +48,7 @@ app.use('/member', Member);
 app.use('/memberlist', MemberList);
 app.use('/reservation', Reservation);
 app.use('/seat', Seat);
+app.use('/payment', Payment);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

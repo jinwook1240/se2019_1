@@ -25,5 +25,11 @@
     <footer>
       <%- include('forms/footer'); -%>
     </footer>
+    <% if (message) {  %>
+      <script type="text/javascript">
+        alert("<%= message %>");
+        window.location.href = "/"
+      </script>
+    <% } %>
   </body>
 </html>

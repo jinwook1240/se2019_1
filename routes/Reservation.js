@@ -14,6 +14,9 @@ router.get('/', (req, res)=> {
 });
 
 router.get('/list', (req, res)=> {
+    if(!req.session.user_id){
+        res.redirect("/?message=로그인 후 이용하세요")
+    }
     const member_id = req.session['user_id'];
     RsrvDAO.searchReservations(member_id, (err, list)=> {
         if (err) {

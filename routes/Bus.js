@@ -5,6 +5,9 @@ const router = express.Router();
 const BusDAO = require("../database/BusDAO");
 
 router.get('/', (req, res)=> {
+    if(!req.session.user_id){
+        res.redirect("/?message=로그인 후 이용하세요")
+    }
     const condition = 'bus_code="'+req.query.date+req.query.dptloc+req.query.arvloc+'"';
     console.log(condition);
     BusDAO.searchBus(condition, (dao_res)=>{
@@ -13,6 +16,9 @@ router.get('/', (req, res)=> {
 });
 
 router.post('/', (req, res)=> {
+    if(!req.session.user_id){
+        res.redirect("/?message=로그인 후 이용하세요")
+    }
     BusDAO.createBus(req.query.props, (err, queryres, fields)=>{
         if(err){
             res.render('error',{'message':"차량 추가에 실패하였습니다.", 'error':err});
@@ -23,7 +29,7 @@ router.post('/', (req, res)=> {
 });
 router.get('/busAdd', (req, res)=>{
     if(!req.query === {}){
-        res.render('busAdd',{'alertmessage':undefined, 'script':undefined, "user_id":req.session.user_id});
+        res.render('busAdd',{'alertmessage':undefined, "user_id":req.session.user_id});
     }
     else{
         for(let idx = 0;idx < Object.keys(req.query).length ;idx++){
@@ -32,15 +38,19 @@ router.get('/busAdd', (req, res)=>{
                 delete req.query[key];
             }
         }
+        console.log(req.query);
         BusDAO.createBus(req.query, (q_err, q_res, q_field)=>{
-            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', 'script':undefined, "user_id":req.session.user_id});
-            else res.render('busAdd',{'alertmessage':'bus added successfully!', 'script':'window.location.href="/"', "user_id":req.session.user_id});
+            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', "user_id":req.session.user_id});
+            else res.redirect("/?message=bus added successfully!");
         });
     }
 
 });
 
 router.get('/detail', (req, res)=> {
+    if(!req.session.user_id){
+        res.redirect("/?message=로그인 후 이용하세요")
+    }
     BusDAO.searchBus('bus_code="'+req.query.bus_code+'"', (dao_res)=>{
         res.render('busDetail', { // 좌석 뽑아낼 ejs 입력
             'bus_code': req.query.bus_code,

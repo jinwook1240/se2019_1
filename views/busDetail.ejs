@@ -9,6 +9,7 @@
     <header>
       <%- include('forms/header'); -%>
     </header><br>
+    <h3>좌석을 선택하십시오</h3>
     <div id="seatTableContainer">
       <table id="seatTable">
         <tr>
@@ -51,7 +52,7 @@
       <label for="seats_num">Selected Seats : </label>
       <input type="text" id="seats_num" name="seats_num" value="0" disabled><br>
       <br>
-      <input type="button" id="searchButton" value="Submit" onclick="doReservation();">
+      <input type="button" id="doReservation" value="Submit" onclick="onSubmitClicked()">
       <br><br>
     </form>
     <footer>

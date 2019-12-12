@@ -132,7 +132,7 @@ class ReservationDAO {
                 errorHandlingCallback(query_err, callback);
             });
         });
-        sql = "commit;"
+        sql = "commit;";
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) callback(query_err);
             else callback(null);

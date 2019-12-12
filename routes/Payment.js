@@ -10,7 +10,10 @@ router.get('/', (req, res)=> {
     'seat': req.query.seat_list});
 });
 router.get('/confirm', (req, res)=> {
-    console.log("payment confirm : "+req.query);
+    req.query.seat_sel = req.query.seat_sel.replace('"','');
+    req.query.seat_sel = req.query.seat_sel.replace('"','');
+    req.query.seat_sel = "["+req.query.seat_sel+"]";
+    console.log("payment confirm : "+JSON.stringify(req.query));
     const bus_code = req.query['bus_code'];
     const member_id = req.session.user_id;
     const seats = JSON.parse(req.query.seat_sel);

@@ -5,8 +5,9 @@ window.onload = ()=>{
         loadSeats();
     },10000);
 };
-let reservedSeats = [9999];
-let selectedSeats = [9999];
+let selectedSeatsDummy = 99999;
+let reservedSeats = [];
+let selectedSeats = [selectedSeatsDummy];
 function loadSeats(){
     let xhr = new XMLHttpRequest();
     if (!xhr) {
@@ -60,6 +61,8 @@ function setSeatsProps(){
             //console.log("reserved :",seatid);
             if(selectedSeats.includes(seatnum)){
                 delete selectedSeats[selectedSeats.indexOf(seatnum)];
+                selectedSeats = selectedSeats.filter(String);
+                alert(seatnum+"번 좌석이 예약되었습니다. 다른 좌석을 선택하세요");
             }
             document.getElementById(seatid)['disabled'] = true;
         }
@@ -67,14 +70,23 @@ function setSeatsProps(){
             //console.log("selected :",seatid);
             document.getElementById(seatid).style.backgroundColor="#ff0000";
             document.getElementById(seatid)['disabled'] = false;
+            delete document.getElementById(seatid)['disabled'];
         }else{
             //console.log("not selected :",seatid);
             document.getElementById(seatid).style.backgroundColor="#ffffff";
             document.getElementById(seatid)['disabled'] = false;
+            delete document.getElementById(seatid)['disabled'];
         }
     }
     document.getElementById("cost").value=selectedSeats.length-1;
     document.getElementById("seats_num").value=(selectedSeats.length-1)*row.rate;
+    if(selectedSeats.length-1>0){
+        document.getElementById("doReservation")["hidden"] = false;
+        delete document.getElementById("doReservation")["hidden"];
+    }
+    else{
+        document.getElementById("doReservation")["hidden"] = true;
+    }
 }
 function onSelectSeat(event){
     if(!selectedSeats.includes(Number(event.target.id.replace("seat_", "")))){
@@ -88,7 +100,20 @@ function onSelectSeat(event){
     }
     document.getElementById("cost").value=selectedSeats.length-1;
     document.getElementById("seats_num").value=(selectedSeats.length-1)*row.rate;
+    if(selectedSeats.length-1>0){
+        document.getElementById("doReservation")["hidden"] = false;
+        delete document.getElementById("doReservation")["hidden"];
+    }
+    else{
+        document.getElementById("doReservation")["hidden"] = true;
+    }
 }
 function onSubmitClicked(){
-    window.location.href="/payment?";
+    setSeatsProps();
+    if(selectedSeats.length<2){
+        return;
+    }
+    delete selectedSeats[selectedSeats.indexOf(selectedSeatsDummy)];
+    selectedSeats = selectedSeats.filter(String);
+    window.location.href="/payment?bus="+JSON.stringify(row)+"&seat_list="+JSON.stringify(selectedSeats);
 }

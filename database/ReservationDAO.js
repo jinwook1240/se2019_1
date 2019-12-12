@@ -128,7 +128,7 @@ class ReservationDAO {
         conn.query(sql, (query_err, query_res, query_fields) => {
             tempCallback(query_err, query_res, callback);
         });
-        sql = "commit;"
+        sql = "commit;";
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) callback(query_err);
             else callback(null);

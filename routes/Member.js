@@ -66,11 +66,11 @@ class Member {
                 } else {
                     if(req.session.user_id){
                         DEBUG_LOG(FUNCTIONTAG, "currently logined");
-                        res.redirect('/');
+                        res.redirect('/?message=currently logined');
                     }else{
                         DEBUG_LOG(FUNCTIONTAG, "login success! : "+id);
                         req.session.user_id=id;
-                        res.redirect('/');
+                        res.redirect('/?message=login success');
                     }
                 }
             });
@@ -84,8 +84,8 @@ class Member {
         }
         MemberDAO.insertMember(id, pw, name, phone, email, (dao_res) => {
             console.log(id, pw, name, phone, email);
-            if (dao_res) res.redirect('/');
-            else res.redirect('/');
+            if (dao_res) res.redirect('/?message=회원 가입에 실패하였습니다.');
+            else res.redirect('/?message=회원 가입을 축하합니다..');
         });
     }
 

@@ -37,7 +37,7 @@ router.get('/list', (req, res)=> {
             objs...
         }
         */
-        console.log("seats: ", list[0]['seats']);
+        console.log("list: ", list);
         res.render('reservationList', {"list": list});
     });
 });

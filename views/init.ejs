@@ -23,8 +23,10 @@
       <%- include('forms/footer'); -%>
     </footer>
   </body>
+  <% if (message) {  %>
   <script type="text/javascript">
-    const message = <%= message %>;          
-    if(message) alert(message);
+    const message = <%= message %>;
+    alert(message);
   </script>
+  <% } %>
 </html>

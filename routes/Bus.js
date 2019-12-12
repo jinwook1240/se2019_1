@@ -41,9 +41,12 @@ router.get('/busAdd', (req, res)=>{
 
 });
 
-router.get('/busdetail', (req, res)=> {
-    RsrvDAO.searchSeats(req.query.bus_code, (reservedSeats) => {
-            if (!reservedSeats) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
+router.get('/detail', (req, res)=> {
+    RsrvDAO.searchSeats(req.query.bus_code, (err, reservedSeats) => {
+            if (err) {
+                res.render('error',{'message':"버스 상세 조회에 실패하였습니다.", 'error':err});
+                return;
+            }
             let seats = new Array();
             for (let i in reservedSeats) {
                 const num = reservedSeats[i]['seat_number']
@@ -52,7 +55,10 @@ router.get('/busdetail', (req, res)=> {
             for (let i = 1; i <= 28; i++) {
                 if (seats[i] === undefined) seats[i] = new Seat(i, false);
             }
-            res.render('reservation', {"user_id":req.session.user_id}); // 채워야 함
+            res.render('', { // 좌석 뽑아낼 ejs 입력
+                'bus_code': bus_code,
+                'seats' :seats
+            });
         });
 });
 

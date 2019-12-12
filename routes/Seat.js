@@ -5,7 +5,9 @@ const router = express.Router();
 const RsrvDAO = require("../database/ReservationDAO");
 
 router.get('/:id', (req, res)=> {
-    RsrvDAO.searchSeats(req.param.id, (err, reservedSeats) => {
+    console.log('seat search : ',req.params.id);
+    RsrvDAO.searchSeats(req.params.id, (err, reservedSeats) => {
+
         if (err) {
             console.log(err);
             res.render('error',{'message':"Seat 조회에 실패하였습니다.", 'error':err});

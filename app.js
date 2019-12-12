@@ -10,6 +10,7 @@ const init = require('./routes/init');
 
 const Bus = require('./routes/Bus');
 const BusList = require('./routes/BusList');
+const Seat = require('./routes/Seat');
 
 const Member = require('./routes/Member');
 const MemberList = require('./routes/MemberList');
@@ -44,6 +45,7 @@ app.use('/buslist', BusList);
 app.use('/member', Member);
 app.use('/memberlist', MemberList);
 app.use('/reservation', Reservation);
+app.use('/seat', Seat);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

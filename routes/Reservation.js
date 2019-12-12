@@ -28,20 +28,20 @@ router.get('/searchlist', (req, res)=> {
     });
 });
 
-router.post('/reserve', (req, res)=> {
-    console.log("1");
-    const bus_code = req.query['bus_code'];
-    const member_id = req.query['member_id'];
-    const seats = req.query['seats'];
+router.post('/reserve', (req, res, next) => {
+    const bus_code = req.body['bus_code'];
+    const member_id = req.body['member_id'];
+    const seats = req.body['seats'];
     RsrvDAO.reserveSeats(bus_code, member_id, seats, (err)=> {
-        console.log("7");
         if (err) {
             console.log("err");
             res.render('error',{'message':"좌석 예매에 실패하였습니다.", 'error':err});
             return;
         }
-        console.log("8");
-        res.render('', {'message': "성공적으로 예매되었습니다.",}); // ejs 경로 채워야함. alert만 띄워주고 초기화면으로 돌아가자
+        res.render('init', {
+            'message': "성공적으로 예매되었습니다.",
+            'user_id': member_id
+        });
     });
 });
 

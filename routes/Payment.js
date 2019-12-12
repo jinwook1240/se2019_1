@@ -20,16 +20,13 @@ router.get('/confirm', (req, res)=> {
     if(!req.session.user_id){
         res.redirect("/?message=로그인 후 이용하세요")
     }
-    req.query.seat_sel = req.query.seat_sel.replace('"','');
-    req.query.seat_sel = req.query.seat_sel.replace('"','');
-    req.query.seat_sel = "["+req.query.seat_sel+"]";
     console.log("payment confirm : "+JSON.stringify(req.query));
     const bus_code = req.query['bus_code'];
     const member_id = req.session.user_id;
     const seats = JSON.parse(req.query.seat_sel);
     MemberDAO.getCoin(req.session.user_id, (member_res)=>{
         BusDAO.searchBus('bus_code="'+bus_code+'"', (bus_res)=>{
-            if(member_res<bus_res[0].rate*req.query.seat_sel.length){
+            if(member_res<bus_res[0].rate*seats.length){
                 res.redirect('/?message=코인이 부족합니다.');
                 return;
             }

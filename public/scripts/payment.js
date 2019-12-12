@@ -11,9 +11,10 @@ window.onload = ()=>{
     document.getElementById("seat_sel").value =pay_info.seat;
     document.getElementById("seat_cnt").value =pay_info.seat.length;
     document.getElementById("total").value =pay_info.seat.length*pay_info.bus.rate;
+    
 };
 function onPaymentClick(){
     window.location.href =
         "/payment/confirm?bus_code="+document.getElementById("bus_code").value
-        +"&seat_sel="+JSON.stringify(document.getElementById("seat_sel").value);
+        +"&seat_sel="+JSON.stringify(pay_info.seat);
 }

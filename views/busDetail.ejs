@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <%- include('forms/head'); -%>
+    <script> let row = <%- row %></script>
+    <script src="/scripts/busDetail.js"></script>
+  </head>
+  <body>
+    <header>
+      <%- include('forms/header'); -%>
+    </header><br>
+    <div id="seatTableContainer">
+      <table id="seatTable">
+        <tr>
+          <th colspan="4">Front</th>
+        </tr>
+        <tr>
+          <td></td><td></td><td rowspan="8"></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr>
+          <th colspan="4">End</th>
+        </tr>
+      </table></div>
+    <form id="busSearchForm">
+      <label for="cost">Cost : </label>
+      <input type="text" id="cost" name="cost" value="0" disabled><br>
+      <label for="seats_num">Selected Seats : </label>
+      <input type="text" id="seats_num" name="seats_num" value="0" disabled><br>
+      <br>
+      <input type="button" id="searchButton" value="Submit" onclick="doReservation();">
+      <br><br>
+    </form>
+    <footer>
+      <%- include('forms/footer'); -%>
+    </footer>
+  </body>
+</html>

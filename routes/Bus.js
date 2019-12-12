@@ -3,7 +3,6 @@
 const express = require('express');
 const router = express.Router();
 const BusDAO = require("../database/BusDAO");
-const RsrvDAO = require("../database/ReservationDAO");
 
 router.get('/', (req, res)=> {
     const condition = 'bus_code="'+req.query.date+req.query.dptloc+req.query.arvloc+'"';
@@ -41,19 +40,14 @@ router.get('/busAdd', (req, res)=>{
 
 });
 
-router.get('/busdetail', (req, res)=> {
-    RsrvDAO.searchSeats(req.query.bus_code, (reservedSeats) => {
-            if (!reservedSeats) return 'ReservationDAO.searchSeats Query Error'; // res.render로 수정 필요
-            let seats = new Array();
-            for (let i in reservedSeats) {
-                const num = reservedSeats[i]['seat_number']
-                seats[num] = new Seat(num, true);
-            }
-            for (let i = 1; i <= 28; i++) {
-                if (seats[i] === undefined) seats[i] = new Seat(i, false);
-            }
-            res.render('', {'' :Seat.make_seats_display(seats)}); // 채워야 함
+router.get('/detail', (req, res)=> {
+    BusDAO.searchBus('bus_code="'+req.query.bus_code+'"', (dao_res)=>{
+        res.render('busDetail', { // 좌석 뽑아낼 ejs 입력
+            'bus_code': req.query.bus_code,
+            'row' : JSON.stringify(dao_res[0]),
+            "user_id":req.session.user_id
         });
+    });
 });
 
 module.exports = router;

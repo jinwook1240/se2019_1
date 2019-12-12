@@ -16,7 +16,7 @@
             <% } %>
         <% } %>
         <td><input type="button" name="reservation" value="예매"
-                   onclick="location.href = location.origin + '/reservation'+'?bus_code='+'<%= buslist[idx]['bus_code'] %>'"
+                   onclick="location.href = location.origin + '/bus/detail'+'?bus_code='+'<%= buslist[idx]['bus_code'] %>'"
                    id="button_<%= idx %>"></td>
     </tr>
     <% } %>

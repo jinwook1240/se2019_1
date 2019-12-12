@@ -7,7 +7,6 @@ function searchBus(){
     }
     xhr.onreadystatechange = ()=>{
         document.getElementById("busTable").innerHTML = xhr.responseText;
-        onBusTableLoad();
     };
     let formstr = "";
     for(let key of formData.keys()){
@@ -45,4 +44,8 @@ function updateCoin(id, coinInput){
     };
     xhr.open('GET', '/member/updateCoin?coin='+document.getElementById(coinInput).value+"&id="+id);
     xhr.send();
+}
+
+function searchReservations() {
+    
 }

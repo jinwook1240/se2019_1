@@ -41,8 +41,12 @@ router.get('/busAdd', (req, res)=>{
 });
 
 router.get('/detail', (req, res)=> {
-    res.render('busDetail', { // 좌석 뽑아낼 ejs 입력
-        'bus_code': req.query.bus_code
+    BusDAO.searchBus('bus_code="'+req.query.bus_code+'"', (dao_res)=>{
+        res.render('busDetail', { // 좌석 뽑아낼 ejs 입력
+            'bus_code': req.query.bus_code,
+            'row' : JSON.stringify(dao_res[0]),
+            "user_id":req.session.user_id
+        });
     });
 });
 

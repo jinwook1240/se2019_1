@@ -5,8 +5,8 @@ window.onload = ()=>{
         loadSeats();
     },10000);
 };
-let reservedSeats = [];
-let selectedSeats = [];
+let reservedSeats = [9999];
+let selectedSeats = [9999];
 function loadSeats(){
     let xhr = new XMLHttpRequest();
     if (!xhr) {
@@ -22,7 +22,7 @@ function loadSeats(){
             tmpReservedSeats.push(seatobj['seat_number']);
         }
         reservedSeats = tmpReservedSeats;
-        setSeatsProps()
+        setSeatsProps();
 
     };
     xhr.open('GET', '/seat/'+row.bus_code);
@@ -54,7 +54,6 @@ function setSeatsId(){
     }
 }
 function setSeatsProps(){
-
     for(let seatnum = 1;seatnum<29;seatnum++){
         let seatid = 'seat_'+seatnum;
         if(reservedSeats.includes(seatnum)){
@@ -74,20 +73,21 @@ function setSeatsProps(){
             document.getElementById(seatid)['disabled'] = false;
         }
     }
-    document.getElementById("cost").value=selectedSeats.length;
-    document.getElementById("seats_num").value=selectedSeats.length;
+    document.getElementById("cost").value=selectedSeats.length-1;
+    document.getElementById("seats_num").value=(selectedSeats.length-1)*row.rate;
 }
 function onSelectSeat(event){
     if(!selectedSeats.includes(Number(event.target.id.replace("seat_", "")))){
         selectedSeats.push(Number(event.target.id.replace("seat_", "")));
         event.target.style.backgroundColor="#ff0000";
-        document.getElementById("cost").value=selectedSeats.length;
-        document.getElementById("seats_num").value=selectedSeats.length*row.rate;
     }
     else{
         event.target.style.backgroundColor="#ffffff";
         delete selectedSeats[selectedSeats.indexOf(Number(event.target.id.replace("seat_", "")))];
+        selectedSeats = selectedSeats.filter(String);
     }
+    document.getElementById("cost").value=selectedSeats.length-1;
+    document.getElementById("seats_num").value=(selectedSeats.length-1)*row.rate;
 }
 function onSubmitClicked(){
     window.location.href="/payment?";

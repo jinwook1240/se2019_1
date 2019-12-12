@@ -5,6 +5,27 @@ if (module.exports.connection !== undefined) return;
 module.exports.connection = require('../database/mysql.js');
 const conn = module.exports.connection;
 
+class Reservation {
+    constructor(obj) {
+        this.bus_code = obj['bus_code'];
+        this.date = obj['date'];
+        this.departure_location = obj['departure_location'];
+        this.arrival_location = obj['arrival_location'];
+        this.departure_time = obj['departure_time'];
+        this.arrival_time = obj['arrival_time'];
+        this.rate = obj['rate'];
+        this.seats = [obj['seat_number']]; // list라는 것에 유의
+    }
+};
+
+function tempCallback(err, res, callback) {
+    if (err) {
+        console.log(err);
+        callback(err);
+        return;
+    }
+    else console.log("tempCallback success");
+}
 
 class ReservationDAO {
     static searchSeats(bus_code, callback) {
@@ -24,63 +45,73 @@ class ReservationDAO {
     }
 
     static searchReservations(member_id, callback) {
-        const sql = 
-            'select rsrv.bus_code, seat_number '
+        console.log("member_id: ", member_id);
+        let sql = 
+            'select bus_code, date, departure_location, arrival_location, '
+            +'departure_time, arrival_time, rate, seat_number '
+            +'from bus natural join ('
+            +'select rsrv.bus_code, seat_number '
             +'from reservation as rsrv, reservation_seats as seats '
             +'where rsrv.member_id="' + member_id + '" '
-            +'and rsrv.bus_code = seats.bus_code';
+            +'and rsrv.bus_code = seats.bus_code '
+            +') as k';
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) { // error
-                callback(query_err, null, null);
+                console.log(query_err);
+                callback(query_err, null);
                 return;
             }
-            let bus_codes = [query_res[0]['bus_code']];
-            let seats = new Array();
-            let size = 1;
-            let seat_nums = [query_res[0]['seat_number']];
             const len = query_res.length;
+            let list = new Array();
+            let reservation = new Reservation(query_res[0]);
+            let curr_bus_code = reservation['bus_code'];
+            let seats = reservation['seats'];
             for (let i = 1; i < len; i++) {
-                const bus_code = query_res[i]['bus_code'];
-                if (bus_codes[size] != bus_code) {
-                    seats.push(seat_nums)
-                    seat_nums = new Array();
-                    bus_codes.push(bus_code);
-                    size++;
+                const obj = query_res[i];
+                if (curr_bus_code == obj['bus_code']) { // 같은 버스면 좌석 추가
+                    seats.push(obj['seat_number']);
+                } else { // 다른 버스면 예약을 리스트에 추가
+                    list.push(reservation);
+                    reservation = new Reservation(obj);
+                    seats = reservation['seats'];
                 }
-                seat_nums.push(query_res[i]['seat_number']);
             }
-            seats.push(seat_nums);
-            callback(null, bus_codes, seats);
+            console.log(list);
+            callback(null, list);
         });
     }
 
-    static tempCallback(err, res, callback) {
-        if (err) {
-            console.log(err);
-            callback(err);
-            return;
-        }
-        else console.log("tempCallback success");
+    static newReservation(obj) {
+        let reservation = new Array();
+        reservation['bus_code'] = obj['bus_code'];
+        reservation['date'] = obj['date'];
+        reservation['departure_location'] = obj['departure_location'];
+        reservation['arrival_location'] = obj['arrival_location'];
+        reservation['departure_time'] = obj['departure_time'];
+        reservation['arrival_time'] = obj['arrival_time'];
+        reservation['rate'] = obj['rate'];
+        reservation['seats'] = [obj['seat_number']]; // list라는 것에 유의
+        return reservation;
     }
 
     static reserveSeats(bus_code, member_id, seats, callback) {
         let sql = 'start transaction;'
         conn.query(sql, (query_err, query_res, query_fields) => {
-            ReservationDAO.tempCallback(query_err, query_res, callback);
+            tempCallback(query_err, query_res, callback);
         });
         sql = 'insert into reservation values('
             +'"' + bus_code+member_id + '", '
             +'"' + bus_code + '", '
             +'"' + member_id + '");';
         conn.query(sql, (query_err, query_res, query_fields) => {
-            ReservationDAO.tempCallback(query_err, query_res, callback);
+            tempCallback(query_err, query_res, callback);
         });
         for (let i in seats) {
             sql = 'insert into reservation_seats values('
             +'"' + bus_code + '", '
             +'' + seats[i] + ');';
             conn.query(sql, (query_err, query_res, query_fields) => {
-                ReservationDAO.tempCallback(query_err, query_res, callback);
+                tempCallback(query_err, query_res, callback);
             });
         }
         sql = "commit;"

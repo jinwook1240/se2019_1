@@ -12,14 +12,14 @@
             date = YY+MM+DD;
 
             let dpt_time = buslist[idx]['departure_time'];
-            const hh = dpt_time.slice(0,2)+"시 ";
-            const mm = dpt_time.slice(2,4)+"분";
-            dpt_time = hh+mm;
+            const dpt_hh = dpt_time.slice(0,2)+"시 ";
+            const dpt_mm = dpt_time.slice(2,4)+"분";
+            dpt_time = dpt_hh+dpt_mm;
 
             let arv_time = buslist[idx]['arrival_time'];
-            const hour = arv_time.slice(0,2)+"시 ";
-            const minute = arv_time.slice(2,4)+"분";
-            arv_time = hh+mm;
+            const arv_hh = arv_time.slice(0,2)+"시 ";
+            const arv_mm = arv_time.slice(2,4)+"분";
+            arv_time = arv_hh+arv_mm;
 
             const rate = buslist[idx]['rate'] + "원";
         %>

@@ -31,16 +31,15 @@ class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
             'SELECT seat_number '
-            +' FROM jjj.reservation_seats'
+            +' FROM reservation_seats'
             +' where bus_code = "' + bus_code + '" '
             +' order by seat_number';
-        //console.log("sql : ",sql);
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) {
                 callback(query_err, null);
                 return;
             }
-            //console.log(query_res);
+            console.log(query_res);
             callback(null, query_res);
         });
     }
@@ -63,12 +62,12 @@ class ReservationDAO {
                 callback(query_err, null);
                 return;
             }
+            const list = new Array();
             const len = query_res.length;
             if (len == 0) {
                 callback(null, list);
                 return;
             }
-            const list = new Array();
             let reservation = new Reservation(query_res[0]);
             let curr_bus_code = reservation['bus_code'];
             let seats = reservation['seats'];
@@ -117,7 +116,6 @@ class ReservationDAO {
                 errorHandlingCallback(query_err, callback);
             });
         }
-        // pay 부분 확인 필요
         sql = 'select rate from bus where bus_code = "' + bus_code + '"';
         conn.query(sql, (query_err, query_res, query_fields) => {
             const size = seats.length;

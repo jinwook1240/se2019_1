@@ -20,10 +20,7 @@ router.get('/confirm', (req, res)=> {
             res.render('error',{'message':"좌석 예매에 실패하였습니다.", 'error':err});
             return;
         }
-        res.render('init', {
-            'message': "성공적으로 예매되었습니다.",
-            'user_id': member_id
-        });
+        res.redirect('/?message=성공적으로 예매되었습니다.');
     });
 });
 

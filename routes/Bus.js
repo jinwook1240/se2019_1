@@ -23,7 +23,7 @@ router.post('/', (req, res)=> {
 });
 router.get('/busAdd', (req, res)=>{
     if(!req.query === {}){
-        res.render('busAdd',{'alertmessage':undefined, 'script':undefined, "user_id":req.session.user_id});
+        res.render('busAdd',{'alertmessage':undefined, "user_id":req.session.user_id});
     }
     else{
         for(let idx = 0;idx < Object.keys(req.query).length ;idx++){
@@ -32,9 +32,10 @@ router.get('/busAdd', (req, res)=>{
                 delete req.query[key];
             }
         }
+        console.log(req.query);
         BusDAO.createBus(req.query, (q_err, q_res, q_field)=>{
-            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', 'script':undefined, "user_id":req.session.user_id});
-            else res.render('busAdd',{'alertmessage':'bus added successfully!', 'script':'window.location.href="/"', "user_id":req.session.user_id});
+            if(q_err) res.render('busAdd',{'alertmessage':'bus add failed!', "user_id":req.session.user_id});
+            else res.redirect("/?message=bus added successfully!");
         });
     }
 

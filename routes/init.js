@@ -8,13 +8,13 @@ router.get('/', function(req, res){
     if(req.session.user_id === "admin"){
         res.render('admin', {
             "user_id":req.session.user_id,
-            "message": undefined
+            "message": req.query.message
         });
     }
     else{
         res.render('init', {
             "user_id":req.session.user_id, 
-            "message": undefined
+            "message": req.query.message
     });
     }
 });

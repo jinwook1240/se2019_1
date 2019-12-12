@@ -25,7 +25,8 @@
   </body>
   <% if (message) {  %>
   <script type="text/javascript">
-    alert(<%= message %>);
+    alert("<%= message %>");
+    window.location.href = "/"
   </script>
   <% } %>
 </html>

@@ -14,17 +14,18 @@ class ReservationDAO {
             +'where bus_code = "' + bus_code + '" '
             +'order by seat_number';
         conn.query(sql, (query_err, query_res, query_fields) => {
-            let ret;
-            if (query_err) ret =  0; // error
-            else ret = query_res;
+            if (query_err) {
+                callback(query_err, null);
+                return;
+            }
             console.log(ret);
-            // callback(ret);
+            callback(null, query_res);
         });
     }
 
     static searchReservations(member_id, callback) {
         const sql = 
-            'select member_id, rsrv.bus_code, seat_number '
+            'select rsrv.bus_code, seat_number '
             +'from reservation as rsrv, reservation_seats as seats '
             +'where rsrv.member_id="' + member_id + '" '
             +'and rsrv.bus_code = seats.bus_code';

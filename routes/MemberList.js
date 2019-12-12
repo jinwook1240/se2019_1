@@ -5,8 +5,11 @@ const router = express.Router();
 const MemberDAO = require('../database/MemberDAO');
 
 router.get('/', (req, res)=> {
+    if(!req.session.user_id){
+        res.redirect("/?message=로그인 후 이용하세요")
+    }
     if(req.session.user_id!=="admin"){
-        res.render('error', {"message" : "PERMISSION DENIED"});
+        res.render('error', {"message" : "관리자 권한이 필요합니다."});
     }
     let condition = undefined;
     let beforecondition = false;

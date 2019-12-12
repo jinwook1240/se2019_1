@@ -1,2 +1,15 @@
-<h1>hello, world!</h1>
-<div><%= list %></div>
+<% if(list.length == 0) { %>
+    <h1>예매 내역이 없습니다.</h1>
+<%  } else { %>
+    <div style="border: 1px solid black; display: inline-block">
+        <% for(var i = 0; i < list.length; i++) { %>
+            <label for="date">예매 날짜 : </label><%= list[i]['date'] %><br>
+            <label for="departure_location">출발지 : </label><%= list[i]['departure_location'] %><br>
+            <label for="arrival_location">도착지 : </label><%= list[i]['arrival_location'] %><br>
+            <label for="departure_time">출발 시각 : </label><%= list[i]['departure_time'] %><br>
+            <label for="arrival_time">도착 시각 : </label><%= list[i]['arrival_time'] %><br>
+            <label for="seats">좌석(들) : </label><%= list[i]['seats'] %><br>
+            <label for="rate">요금 : </label><%= list[i]['rate'] %>
+        <% } %>
+    </div>
+<% } %>

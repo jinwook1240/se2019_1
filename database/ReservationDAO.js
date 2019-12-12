@@ -27,6 +27,15 @@ function tempCallback(err, res, callback) {
     else console.log("tempCallback success");
 }
 
+function paymentCallback(err, res, callback) {
+    if (err) {
+        console.log(err);
+        callback(err);
+        return;
+    }
+    return res[0]['rate'];
+}
+
 class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
@@ -54,7 +63,8 @@ class ReservationDAO {
             +'from reservation as rsrv, reservation_seats as seats '
             +'where rsrv.member_id="' + member_id + '" '
             +'and rsrv.bus_code = seats.bus_code '
-            +') as k';
+            +') as k '
+            +'order by date desc, departure_time desc, arrival_time desc';
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) { // error
                 console.log(query_err);
@@ -62,36 +72,30 @@ class ReservationDAO {
                 return;
             }
             const len = query_res.length;
-            let list = new Array();
+            if (len == 0) {
+                callback(null, list);
+                return;
+            }
+            const list = new Array();
             let reservation = new Reservation(query_res[0]);
             let curr_bus_code = reservation['bus_code'];
             let seats = reservation['seats'];
+            let push_flag = true;
             for (let i = 1; i < len; i++) {
                 const obj = query_res[i];
                 if (curr_bus_code == obj['bus_code']) { // 같은 버스면 좌석 추가
                     seats.push(obj['seat_number']);
+                    push_flag = true;
                 } else { // 다른 버스면 예약을 리스트에 추가
                     list.push(reservation);
                     reservation = new Reservation(obj);
                     seats = reservation['seats'];
+                    push_flag = false;
                 }
             }
-            console.log(list);
+            if (push_flag) list.push(reservation);
             callback(null, list);
         });
-    }
-
-    static newReservation(obj) {
-        let reservation = new Array();
-        reservation['bus_code'] = obj['bus_code'];
-        reservation['date'] = obj['date'];
-        reservation['departure_location'] = obj['departure_location'];
-        reservation['arrival_location'] = obj['arrival_location'];
-        reservation['departure_time'] = obj['departure_time'];
-        reservation['arrival_time'] = obj['arrival_time'];
-        reservation['rate'] = obj['rate'];
-        reservation['seats'] = [obj['seat_number']]; // list라는 것에 유의
-        return reservation;
     }
 
     static reserveSeats(bus_code, member_id, seats, callback) {
@@ -114,6 +118,16 @@ class ReservationDAO {
                 tempCallback(query_err, query_res, callback);
             });
         }
+        // pay 부분 확인 필요
+        let pay;
+        sql = 'select rate from bus where bus_code = "' + bus_code + '"';
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            pay = paymentCallback(query_err, query_res, callback) * seats.length;
+        });
+        sql = 'update member set coin = coin - ' + pay +' where member_id = "' + member_id +'"';
+        conn.query(sql, (query_err, query_res, query_fields) => {
+            tempCallback(query_err, query_res, callback);
+        });
         sql = "commit;";
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) callback(query_err);

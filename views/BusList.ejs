@@ -1,20 +1,35 @@
 <table id="busList">
-    <tr><!--
-    <% /*for (var key in buslist[0]) { %>
-        <% if (key === 'bus_code') continue; %>
-        <th><%= key %></th>
-    <% } */%>-->
+    <tr>
         <th>날짜</th><th>출발지</th> <th>도착지</th> <th>출발시각</th> <th>도착시각</th> <th>가격</th> <th>빈좌석</th>
     </tr>
     <% for (var idx in buslist) { %>
     <tr>
-        <% for (var key in buslist[0])  { %>
-            <% if (key === 'bus_code') { %>
-                <% //bus_codes.push(buslist[idx]['bus_code']); %>
-            <% } else { %>
-        <td><%= buslist[idx][key] %></td>
-            <% } %>
-        <% } %>
+        <% 
+            let date = buslist[idx]['date'];
+            const YY = "20"+date.slice(0,2)+"년 ";
+            const MM = date.slice(2,4)+"월 ";
+            const DD = date.slice(4,6)+"일";
+            date = YY+MM+DD;
+
+            let dpt_time = buslist[idx]['departure_time'];
+            const hh = dpt_time.slice(0,2)+"시 ";
+            const mm = dpt_time.slice(2,4)+"분";
+            dpt_time = hh+mm;
+
+            let arv_time = buslist[idx]['arrival_time'];
+            const hour = arv_time.slice(0,2)+"시 ";
+            const minute = arv_time.slice(2,4)+"분";
+            arv_time = hh+mm;
+
+            const rate = buslist[idx]['rate'] + "원";
+        %>
+        <td><%= date %></td>
+        <td><%= buslist[idx]['departure_location'] %></td>
+        <td><%= buslist[idx]['arrival_location'] %></td>
+        <td><%= dpt_time %></td>
+        <td><%= arv_time %></td>
+        <td><%= rate %></td>
+        <td><%= buslist[idx]['empty_seats'] %></td>
         <td><input type="button" name="reservation" value="예매"
                    onclick="location.href = location.origin + '/bus/detail'+'?bus_code='+'<%= buslist[idx]['bus_code'] %>'"
                    id="button_<%= idx %>"></td>

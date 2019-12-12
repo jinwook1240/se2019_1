@@ -41,4 +41,21 @@ router.get('/list', (req, res)=> {
     });
 });
 
+router.post('/reserve', (req, res) => {
+    const bus_code = req.body['bus_code'];
+    const member_id = req.body['member_id'];
+    const seats = req.body['seats'];
+    RsrvDAO.reserveSeats(bus_code, member_id, seats, (err)=> {
+        if (err) {
+            console.log("err");
+            res.render('error',{'message':"좌석 예매에 실패하였습니다.", 'error':err});
+            return;
+        }
+        res.render('init', {
+            'message': "성공적으로 예매되었습니다.",
+            'user_id': member_id
+        });
+    });
+});
+
 module.exports = router;

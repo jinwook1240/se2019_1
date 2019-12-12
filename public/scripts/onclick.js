@@ -13,6 +13,10 @@ function searchBus(){
     for(let key of formData.keys()){
         formstr +=key+"="+formData.get(key)+"&";
     }
+    const inputs = document.getElementsByTagName('input');
+    for (let i in inputs) {
+        if (inputs[i].getAttribute('type') === 'text') inputs[i].value = "";
+    }
     xhr.open('GET', '/buslist?'+formstr);
     xhr.send();
 }
@@ -45,4 +49,8 @@ function updateCoin(id, coinInput){
     };
     xhr.open('GET', '/member/updateCoin?coin='+document.getElementById(coinInput).value+"&id="+id);
     xhr.send();
+}
+
+function searchReservations() {
+    
 }

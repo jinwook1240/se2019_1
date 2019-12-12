@@ -19,8 +19,9 @@ function loadSeats(){
         let tmpReservedSeats = [];
         console.log(xhr.responseText);
         let seatobjlist = JSON.parse(xhr.responseText);
-        for(let seatobj in seatobjlist){
-            tmpReservedSeats.push(seatobj['seat_number']);
+        for(let idx = 0;idx< seatobjlist.length;idx++){
+            console.log(seatobjlist[idx]['seat_number']);
+            tmpReservedSeats.push(seatobjlist[idx]['seat_number']);
         }
         reservedSeats = tmpReservedSeats;
         setSeatsProps();

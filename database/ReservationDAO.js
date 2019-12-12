@@ -31,15 +31,16 @@ class ReservationDAO {
     static searchSeats(bus_code, callback) {
         const sql = 
             'SELECT seat_number '
-            +' FROM reservation_seats'
+            +' FROM jjj.reservation_seats'
             +' where bus_code = "' + bus_code + '" '
             +' order by seat_number';
+        //console.log("sql : ",sql);
         conn.query(sql, (query_err, query_res, query_fields) => {
             if (query_err) {
                 callback(query_err, null);
                 return;
             }
-            console.log(query_res);
+            //console.log(query_res);
             callback(null, query_res);
         });
     }

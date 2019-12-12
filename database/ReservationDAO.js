@@ -63,6 +63,10 @@ class ReservationDAO {
             }
             const len = query_res.length;
             let list = new Array();
+            if (len == 0) {
+                callback(null, list);
+                return;
+            }
             let reservation = new Reservation(query_res[0]);
             let curr_bus_code = reservation['bus_code'];
             let seats = reservation['seats'];
@@ -79,19 +83,6 @@ class ReservationDAO {
             console.log(list);
             callback(null, list);
         });
-    }
-
-    static newReservation(obj) {
-        let reservation = new Array();
-        reservation['bus_code'] = obj['bus_code'];
-        reservation['date'] = obj['date'];
-        reservation['departure_location'] = obj['departure_location'];
-        reservation['arrival_location'] = obj['arrival_location'];
-        reservation['departure_time'] = obj['departure_time'];
-        reservation['arrival_time'] = obj['arrival_time'];
-        reservation['rate'] = obj['rate'];
-        reservation['seats'] = [obj['seat_number']]; // list라는 것에 유의
-        return reservation;
     }
 
     static reserveSeats(bus_code, member_id, seats, callback) {

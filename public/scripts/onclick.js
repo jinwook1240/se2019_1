@@ -15,6 +15,7 @@ function searchBus(){
     xhr.open('GET', '/buslist?'+formstr);
     xhr.send();
 }
+
 function searchUser(){
     var formData = new FormData(document.getElementById("userSearchForm"));
     var xhr = new XMLHttpRequest();
@@ -44,8 +45,4 @@ function updateCoin(id, coinInput){
     };
     xhr.open('GET', '/member/updateCoin?coin='+document.getElementById(coinInput).value+"&id="+id);
     xhr.send();
-}
-
-function searchReservations() {
-    
 }

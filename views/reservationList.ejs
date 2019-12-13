@@ -21,6 +21,7 @@
             <label for="departure_time">출발 시각 : </label><%= reservation['departure_time'] %><br>
             <label for="arrival_time">도착 시각 : </label><%= reservation['arrival_time'] %><br>
             <% 
+                const cnt = reservation['seats'].length;
                 let seats = '';
                 for(let j in reservation['seats']) {
                     seats += String(reservation['seats'][j]) + ', '; 
@@ -28,7 +29,7 @@
                 seats = seats.slice(0,-2);
             %>
             <label for="seats">좌석(들) : </label><%= seats %><br>
-            <label for="rate">요금 : </label><%= list[i]['rate'] %>
+            <label for="rate">요금 : </label><%= list[i]['rate']*cnt %>
         </div>
     <% } %>
 <% } %>

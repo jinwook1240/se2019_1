@@ -15,7 +15,7 @@
                     console.log(String(reservation['seats'][j]));
                     seats += String(reservation['seats'][j]) + ', '; 
                 }
-                seats = seats.slice(0,-2);
+                seats = seats.slice(0, -2);
             %>
             <label for="seats">좌석(들) : </label><%= seats %><br>
             <label for="rate">요금 : </label><%= list[i]['rate'] %>

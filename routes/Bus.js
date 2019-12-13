@@ -28,7 +28,9 @@ router.post('/', (req, res)=> {
     });
 });
 router.get('/busAdd', (req, res)=>{
-    if(!req.query === {}){
+    console.log('query: ', req.query);
+    console.log('query.length: ', req.query.length);
+    if(!req.query[0]){
         res.render('busAdd',{'alertmessage':undefined, "user_id":req.session.user_id, 'user_coin':req.session.user_coin});
     }
     else{
@@ -44,7 +46,6 @@ router.get('/busAdd', (req, res)=>{
             else res.redirect("/?message=bus added successfully!");
         });
     }
-
 });
 
 router.get('/detail', (req, res)=> {

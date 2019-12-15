@@ -43,6 +43,7 @@ module.exports.createBus = (propDict, callback) => {//GET PROPERTY WITH DICTIONA
         query2 += tmp;
     }
     query1 = query1.substring(0,query1.length-1) + query2.substring(0,query2.length-1) + query3;
+    console.log(query1);
     connection.query(query1, (query_err, query_res, query_fields) => {
         if (query_err) {
             console.log(query_err);

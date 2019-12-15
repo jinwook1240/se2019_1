@@ -78,7 +78,11 @@ class Member {
     }
 
     static signUp(id, pw, name, phone, email, res) {
-        if(!id || !pw || !name || !phone || !email){
+        if(!id && !pw && !name && !phone && !email){
+            res.render('signUp', {'signupMessage':""});
+            return;
+        }
+        else if(!id || !pw || !name || !phone || !email){
             res.render('signUp', {'signupMessage':"fill all blanks"});
             return;
         }

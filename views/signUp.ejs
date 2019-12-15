@@ -11,15 +11,15 @@
         <div id="signupMessage"><%= signupMessage %></div>
         <form action="/member/signUp">
             <label for="">ID : </label>
-            <input type="text" name="id"><br>
+            <input type="text" name="id" required><br>
             <label for="">PW : </label>
-            <input type="text"name="pw"><br>
+            <input type="password"name="pw" required><br>
             <label for="">이름 : </label>
-            <input type="text" name="name"><br>
+            <input type="text" name="name" required><br>
             <label for="">전화번호 : </label>
-            <input type="text" name="phone"><br>
+            <input type="text" name="phone" required><br>
             <label for="">이메일 : </label>
-            <input type="text" name="email"><br><br>
+            <input type="text" name="email" required><br><br>
             <input type="submit" value="회원 가입">
             <input type="button" value="취소" onclick="window.location.href='/'">
         </form>

@@ -27,9 +27,7 @@ class MemberDAO {
             sql += ' WHERE ' + condition;
         }
         conn.query(sql, (query_err, query_res, query_fields) => {
-            let ret;
             if (query_err){
-                ret =  0; // error
                 console.log(query_err);
             }
             callback(query_res);
@@ -40,13 +38,10 @@ class MemberDAO {
         const sql = 'INSERT INTO jjj.member (member_id, passwd, name, phone, email, coin) VALUES("'+id+'","'+pw+'","'+name+'","'+phone+'","'+email+'", 10000)';
         console.log(sql);
         conn.query(sql, (query_err, query_res, query_fields) => {
-            let ret;
             if (query_err){
                 console.log(query_err);
-                ret =  false; // error
             }
-            else ret = true;
-            callback(ret);
+            callback(query_err);
         });
     }
 

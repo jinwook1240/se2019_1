@@ -86,9 +86,14 @@ class Member {
             res.render('signUp', {'signupMessage':"fill all blanks"});
             return;
         }
-        MemberDAO.insertMember(id, pw, name, phone, email, (dao_res) => {
+        MemberDAO.insertMember(id, pw, name, phone, email, (dao_err) => {
             console.log(id, pw, name, phone, email);
-            if (dao_res) res.redirect('/?message=회원 가입에 실패하였습니다.');
+            if (dao_err) {
+                if (dao_err['code'] === 'ER_DUP_ENTRY') {
+                    res.redirect('/?message=동일한 아이디가 존재합니다.');
+                }
+                else res.redirect('/?message=회원 가입에 실패하였습니다.');
+            }
             else res.redirect('/?message=회원 가입을 축하합니다..');
         });
     }

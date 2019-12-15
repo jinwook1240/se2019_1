@@ -11,7 +11,7 @@ router.get('/', (req, res)=> {
     if(req.session.user_id!=="admin"){
         res.render('error', {"message" : "관리자 권한이 필요합니다."});
     }
-    let condition = undefined;
+    let condition = '';
     let beforecondition = false;
     if(req.query.id && req.query.id !== ""){
         condition = 'member_id="'+req.query.id+'"';
